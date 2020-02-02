@@ -1,5 +1,5 @@
 
-p, ul, ol {
+* {
     font-family: 'Roboto Condensed', sans-serif;
 }
 
@@ -15,7 +15,7 @@ body {
     background: #f7faff;
     min-width: 100%;
     min-height: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
 }
@@ -26,6 +26,14 @@ body {
     grid-template-rows: 75px calc(100% - 75px);
     min-width: 100%;
     height: 100%;
+}
+
+.base-grid-small {
+    display: grid;
+    grid-template-columns: 200px auto;
+    grid-template-rows: 75px calc(100% - 75px);
+    min-width: 100%;
+    height: 100vh;
 }
 
 .menu-bar {
@@ -166,14 +174,23 @@ body {
     width: 100%;
 }
 
-.ingredient-table {
-    border: none;
+table {
+    border-collapse: collapse;
 }
 
-td{
-    margin-right: 5px;
+td {
+    font-size: 20px;
+    padding: 5px 10px 5px 5px;
 }
 
-.tr-underline {
+th {
     border-bottom: 1px solid #303f4a;
+    font-size: 26px;
+    padding: 5px 10px 5px 5px;
+    background: #cfdae3;
+    margin: 5px;
+}
+
+tr:nth-child(odd) {
+    background: #ebeff7;
 }
