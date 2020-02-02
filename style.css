@@ -15,7 +15,7 @@ body {
     background: #f7faff;
     min-width: 100%;
     min-height: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
     margin: 0;
     padding: 0;
 }
