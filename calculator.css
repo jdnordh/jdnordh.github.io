@@ -1,0 +1,156 @@
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Buttons */
+button{
+    border-radius: 10px;
+    border: 1px #aaa;
+    color: black;
+    padding: 5px;
+    font-size: 3vw;
+    user-select: none;
+    height: inherit;
+    width: inherit;
+}
+
+button:focus, button:active{
+    outline: 0;
+}
+
+.number-button {
+    background-color: #ccebff;
+}
+
+.number-button:hover {
+    background-color: #80ccff;
+}
+
+.equals-button {
+    background-color: #33adff;
+}
+
+.equals-button:hover {
+    background-color: #007acc;
+}
+
+.command-button {
+    background-color: #b3ff99;
+}
+
+.command-button:hover {
+    background-color: #66ff33;
+}
+
+/* Text Areas */
+
+.text-area {
+    display: grid;
+    border: 1px #ddd solid;
+    border-radius: 10px;
+    grid-template-rows: 1fr;
+    padding: 10px;
+    min-height: 10vw;
+    max-height: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#current-text{
+    font-size: 6vw;
+    text-align: right;
+    padding-right: 10px;
+    text-wrap: none;
+}
+
+#last-text{
+    font-size: 3vw;
+    color: #333;
+    padding-left: 10px;
+    text-wrap: none;
+}
+
+/* Grid layout */
+
+.calculator-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 1vw;
+    max-width: 98%;
+    max-height: 98%;
+    width: 98%;
+    height: 98%;
+}
+
+.column-span-all{
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+.column-1 {
+    grid-column-start: 1;
+    grid-column-end: 1;
+}
+
+.column-2 {
+    grid-column-start: 2;
+    grid-column-end: 2;
+}
+
+.column-3 {
+    grid-column-start: 3;
+    grid-column-end: 3;
+}
+.column-4 {
+    grid-column-start: 4;
+    grid-column-end: 4;
+}
+
+.row-1 {
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+.row-2 {
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+.row-3 {
+    grid-row-start: 3;
+    grid-row-end: 3;
+}
+
+.row-4 {
+    grid-row-start: 4;
+    grid-row-end: 4;
+}
+
+.row-5 {
+    grid-row-start: 5;
+    grid-row-end: 5;
+}
+
+.row-6 {
+    grid-row-start: 6;
+    grid-row-end: 6;
+}
+
+html {
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
