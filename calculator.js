@@ -12,6 +12,8 @@
     var errorFlag = false;
     var lastInput = "";
 
+    // TODO Click to copy answer with tooltip
+
     function addToCurrentText(symbol, isOperator) {
         var textSymbol = symbol + "";
         // Clear error on new input
@@ -74,6 +76,15 @@
         return equation.replace(/((?<![0-9])|^)0+(?=[1-9])/gm, "");
     }
 
+    function generateProperDecimals(answer) {
+        var stringAnswer = answer + "";
+        var matches = stringAnswer.match(/\.[0-9]{7,}?/gm);
+        if (matches) {
+            return answer.toFixed(6);
+        }
+        return answer;
+    }
+
     function _equals() {
         if (errorFlag) {
             clearAll();
@@ -88,7 +99,7 @@
             // Evaluate
             eval("lastAnswer = " + equation);
             dbg("Solved: " + lastAnswer);
-            $("#current-text").html(lastAnswer);
+            $("#current-text").html(generateProperDecimals(lastAnswer));
         } catch (e) {
             // Show error
             dbg("Error: " + e.message);
