@@ -26,34 +26,58 @@ function getRandomColor(lastColorIndex) {
     };
 }
 
-let dvd = {
-    posX: 100,
-    posY: 150,
-    moveX: 2,
-    moveY: 2,
-    color: getRandomColor(-1).color,
-    radiusX: 50,
-    radiusY: 30,
-    lastColorIndex: -1,
-    isHeldByUser: false,
-    positionHistory: [{x: 100, y: 150}, {x: 100, y: 150}],
-    isInitialSpeed: true,
-};
+let gameContext = {};
+let mouseHighlightCircle = {};
+let dvd = {};
 
-function initializeDvd(){
+function resetDvd(){
     dvd = {
         posX: 100,
         posY: 150,
         moveX: 2,
         moveY: 2,
         color: getRandomColor(-1).color,
-        radiusX: 50,
-        radiusY: 30,
+        radiusX: 100,
+        radiusY: 60,
         lastColorIndex: -1,
         isHeldByUser: false,
         positionHistory: [{x: 100, y: 150}, {x: 100, y: 150}],
-        isInitialSpeed: true,
     };
+}
+
+function resetContext(){
+    gameContext = {
+        isInitialState: true,
+    }
+}
+
+function resetMouseHighlightCircle(){
+    mouseHighlightCircle = {
+        posX: 0,
+        posY: 0,
+        radius: 30,
+    };
+}
+
+function reset(){
+    resetDvd();
+    resetContext();
+    resetMouseHighlightCircle();
+}
+
+function rectifyDvdPositionWithinScreenBounds(){
+    if (dvd.posX - dvd.radiusX < 0){
+        dvd.posX = dvd.radiusX;
+    }
+    if (dvd.posX + dvd.radiusX > canvas.width){
+        dvd.posX = canvas.width - dvd.radiusX;
+    }
+    if (dvd.posY - dvd.radiusY < 0){
+        dvd.posY = dvd.radiusY;
+    }
+    if (dvd.posY + dvd.radiusY > canvas.height){
+        dvd.posY = canvas.height - dvd.radiusY;
+    }
 }
 
 function moveDvd() {
@@ -77,6 +101,8 @@ function moveDvd() {
         dvd.color = randomColor.color;
         dvd.lastColorIndex = randomColor.index;
     }
+
+    rectifyDvdPositionWithinScreenBounds();
 }
 
 function adjustViewPort(){
@@ -85,7 +111,7 @@ function adjustViewPort(){
 }
 
 function drawDvd() {
-    adjustViewPort();
+    moveDvd();
 
     const startAngle = 0;
     const endAngle = 2 * Math.PI;
@@ -96,18 +122,10 @@ function drawDvd() {
     ctx.fillStyle = dvd.color;
     ctx.fill();
 
-    ctx.font = 'italic 900 30px Arial';
+    ctx.font = 'italic 900 60px Arial';
     ctx.fillStyle = 'black';
-    ctx.fillText('DVD', dvd.posX - 32, dvd.posY + 10);
-
-    if (!dvd.isInitialSpeed){
-        ctx.fillStyle = 'white';
-        ctx.font = '2vw monospace';
-        ctx.textAlign = 'center';
-        ctx.fillText('press space to reset', canvas.width / 2, canvas.height - 50);
-    }
-
-    moveDvd();
+    ctx.textAlign = 'center';
+    ctx.fillText('DVD', dvd.posX, dvd.posY + 18);
 }
 
 function areCoordinatesInDvd(x, y){
@@ -130,7 +148,7 @@ function handleMouseUp(x, y){
     }
     const speedScalingFactor = 0.5;
     dvd.isHeldByUser = false;
-    dvd.isInitialSpeed = false;
+    gameContext.isInitialState = false;
 
     let xMove = dvd.positionHistory[1].x - dvd.positionHistory[0].x;
     let yMove = dvd.positionHistory[1].y - dvd.positionHistory[0].y;
@@ -139,21 +157,34 @@ function handleMouseUp(x, y){
 }
 
 function handleMouseMove(x, y){
+
+    mouseHighlightCircle.posX = x;
+    mouseHighlightCircle.posY = y;
+
     if (!dvd.isHeldByUser){
         return;
     }
 
-    dvd.posX = x;
-    dvd.posY = y;
+    if (x > dvd.radiusX && x < canvas.width - dvd.radiusX){
+        dvd.posX = x;
+    }
+
+    if (y > dvd.radiusY && y < canvas.height - dvd.radiusY){
+        dvd.posY = y;
+    }
 
     dvd.positionHistory[0] = dvd.positionHistory[1];
-    dvd.positionHistory[1] = {x: x, y: y};
+    dvd.positionHistory[1] = {x: dvd.posX, y: dvd.posY};
 }
 
 function attachHandlers(){
     document.addEventListener("keydown", (event) => {
+        if (gameContext.isInitialState){
+            return;
+        }
+
         if (event.key === " ") {
-            initializeDvd();
+            reset();
         }
     });
 
@@ -201,7 +232,7 @@ function attachHandlers(){
         const touch = event.touches[0]; // First touch point
         const x = touch.clientX - rect.left;
         const y = touch.clientY - rect.top;
-        
+
         handleMouseUp(x, y);
     });
 
@@ -218,6 +249,43 @@ function attachHandlers(){
 
 }
 
+function drawHighlightCircle(){
+    // Create a radial gradient
+    const gradient = ctx.createRadialGradient(
+        mouseHighlightCircle.posX,
+        mouseHighlightCircle.posY, 
+        0, 
+        mouseHighlightCircle.posX,
+        mouseHighlightCircle.posY,
+        mouseHighlightCircle.radius);
+    
+    // Define color stops: gray at the center, transparent at the edge
+    gradient.addColorStop(0, "#333333FF");
+    gradient.addColorStop(1, "#33333300");
 
+    // Draw the circle with the gradient
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(mouseHighlightCircle.posX, mouseHighlightCircle.posY, mouseHighlightCircle.radius, 0, 2 * Math.PI);
+    ctx.fill();
+}
+
+function drawText(){
+    if (!gameContext.isInitialState){
+        ctx.fillStyle = 'white';
+        ctx.font = '2vw monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('press space to reset', canvas.width / 2, canvas.height - 50);
+    }
+}
+
+function draw(){
+    adjustViewPort();
+    drawDvd();
+    drawHighlightCircle();
+    drawText();
+}
+
+reset();
 attachHandlers();
-setInterval(drawDvd, 1000 / 60);
+setInterval(draw, 1000 / 60);
