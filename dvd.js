@@ -282,7 +282,7 @@ function drawText(){
 function draw(){
     adjustViewPort();
     drawDvd();
-    drawHighlightCircle();
+    //drawHighlightCircle();
     drawText();
 }
 
