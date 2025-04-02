@@ -10,8 +10,19 @@
     --card-margin: 32px;
     --card-border-radius: 32px;
     --card-double-border-radius: 32px;
-    --card-left-color: #FF3901;
+
+    /* Blue/red card colors */
+    /* --card-left-color: #FF3901;
     --card-right-color: #01C7FF;
+    --card-left-color-shadow: #FF390140;
+    --card-right-color-shadow: #01C7FF40; */
+
+
+    /* Blue/white card colors */
+    --card-left-color: #00b95d;
+    --card-right-color: #015eff;
+    --card-left-color-shadow: #00b95d40;
+    --card-right-color-shadow: #015eff40;
 }
 
 html {
@@ -52,7 +63,7 @@ body {
         radial-gradient(circle at 70% 40%, #414, transparent 50%),
         linear-gradient(to bottom right, #333, #112);
     
-    background-blend-mode: overlay, overlay, overlay, overlay, normal;
+    background-blend-mode: overlay, overlay, overlay, overlay;
 }
 
 h1,h2,h3,h4{
@@ -60,64 +71,48 @@ h1,h2,h3,h4{
 }
 
 h1{
-    font-size: 14vh;
+    font-size: 8vw;
     margin-bottom: 16px;
     margin-top: 16px;
 }
 
 h2{
-    font-size: 8vh;
+    font-size: 4vw;
     margin-bottom: 16px;
     margin-top: 0px;
 }
 
 p{
     margin: 0;
-    font-size: 4vh;
+    font-size: 2vw;
     color: var(--font-color)
-}
-
-.title-card{
-    padding: 48px;
 }
 
 .card{
     display: grid;
     justify-content: left;
     background-color: var(--card-color);
-    filter: drop-shadow(1px 0px 3px var(--card-right-color)) drop-shadow(-1px 0px 3px var(--card-left-color));
+    filter: 
+      drop-shadow(1px 0px 2px var(--card-right-color)) 
+      drop-shadow(-1px 0px 2px var(--card-left-color))
+      drop-shadow(1px 4px 4px var(--card-right-color-shadow)) 
+      drop-shadow(-1px 4px 4px var(--card-left-color-shadow));
     border-radius: var(--card-border-radius);
     transform: translate3d(0,0,0);
-    transform-style: preserve-3d;
 }
 
-.card::before{
-  content: "";
-  position: absolute;
-  z-index: -2;
-  inset: 2px;
-  transform: translate3d(0px, 8px, -1px);
-  background: linear-gradient(to left, var(--card-right-color), var(--card-left-color));
-  filter: blur(8px);
-  opacity: 0.8;
-  border-radius: var(--card-double-border-radius);
-}
-
-/* Reproduces the main element styles */
-.card::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background-color: inherit;
-  border-radius: inherit;
-  border: inherit;
-  box-shadow: inherit;
+.title-card{
+    padding: 48px;
+    filter: 
+      drop-shadow(1px 0px 3px var(--card-right-color)) 
+      drop-shadow(-1px 0px 3px var(--card-left-color))
+      drop-shadow(1px 8px 8px var(--card-right-color-shadow)) 
+      drop-shadow(-1px 8px 8px var(--card-left-color-shadow));
 }
 
 .content-grid{
     display: grid;
-    margin-top: -32px;
+    margin-top: calc(var(--card-margin) * -2);
     padding-bottom: var(--card-margin);
 }
 
@@ -125,7 +120,7 @@ p{
     width: auto;
     border-radius: var(--card-border-radius);
     padding: var(--card-margin);
-    margin: 0 var(--card-margin);    
+    margin: var(--card-margin);    
 }
 
 .title-background{
