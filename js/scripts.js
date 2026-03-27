@@ -37,12 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Adjust blur based on scroll depth
         if (farIslands) {
-            const farBlur = 4 + (scrollPercent * 4); // Starts at 4px, goes to 8px
+            const farBlur = 2 + (scrollPercent * 4); // Starts at 2px, goes to 6px
             farIslands.style.filter = `blur(${farBlur}px)`;
         }
         
         if (midIslands) {
-            const midBlur = 1.5 + (scrollPercent * 2); // Starts at 1.5px, goes to 3.5px
+            const midBlur = 1 + (scrollPercent * 2); // Starts at 1px, goes to 3px
             midIslands.style.filter = `blur(${midBlur}px)`;
         }
     }, { passive: true });

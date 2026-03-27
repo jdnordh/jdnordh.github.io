@@ -4,22 +4,29 @@
     --bg-color-mid: #0b1120;
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
-    
+
     /* Bioluminescent Accents */
     --teal-glow: #2dd4bf;
     --purple-glow: #a855f7;
     --blue-glow: #3b82f6;
+
+    /* Island Colors */
+    --rock-color-light: #2f3a4a;
+    --rock-color-dark: #09090b;
 
     /* Fonts */
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -28,11 +35,15 @@ body, html {
     color: var(--text-main);
     font-family: var(--font-body);
     line-height: 1.6;
-    overflow: hidden; /* Prevent body scroll, use wrapper for parallax */
+    overflow: hidden;
+    /* Prevent body scroll, use wrapper for parallax */
 }
 
 /* Typography */
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     font-family: var(--font-heading);
     margin: 0 0 1rem;
     font-weight: 700;
@@ -80,8 +91,9 @@ a:hover {
     scroll-behavior: smooth;
     position: relative;
     /* Hide scrollbar for aesthetics */
-    scrollbar-width: none; 
+    scrollbar-width: none;
 }
+
 .parallax-wrapper::-webkit-scrollbar {
     display: none;
 }
@@ -99,28 +111,28 @@ a:hover {
 .depth-4 {
     transform: translateZ(-6px) scale(3.5);
     z-index: 1;
-    opacity: 0.6;
-    filter: blur(4px);
+    opacity: 0.85;
+    filter: blur(2px);
 }
 
 .depth-3 {
     transform: translateZ(-4.5px) scale(2.6);
     z-index: 2;
-    opacity: 0.4;
+    opacity: 0.15;
     mix-blend-mode: screen;
 }
 
 .depth-2 {
     transform: translateZ(-3px) scale(2.1);
     z-index: 3;
-    opacity: 0.85;
-    filter: blur(1.5px);
+    opacity: 0.95;
+    filter: blur(1px);
 }
 
 .depth-1 {
     transform: translateZ(-1.5px) scale(1.6);
     z-index: 4;
-    opacity: 0.5;
+    opacity: 0.2;
     mix-blend-mode: screen;
 }
 
@@ -133,26 +145,68 @@ a:hover {
 
 /* --- Themed Elements (Floating Islands & Fog) --- */
 
-.far-islands-container, .mid-islands-container {
+.far-islands-container,
+.mid-islands-container {
     pointer-events: none;
 }
 
 .island {
     position: absolute;
-    background: radial-gradient(circle at 50% 20%, var(--bg-color-mid), #020617);
+    background: radial-gradient(ellipse at 50% 0%, var(--rock-color-light), var(--rock-color-dark));
     animation: float 20s ease-in-out infinite;
     /* Apply drop-shadow for the glow relative to the new clip path shape */
-    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.9)) drop-shadow(0 -5px 20px rgba(45, 212, 191, 0.2));
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 20px rgba(45, 212, 191, 0.4));
 }
 
 /* Far Islands */
-.far.island-1 { width: 300px; height: 200px; top: 20%; left: 10%; animation-delay: 0s; clip-path: polygon(5% 0, 95% 0, 80% 40%, 60% 80%, 45% 100%, 25% 60%); }
-.far.island-2 { width: 450px; height: 300px; top: 60%; right: 15%; animation-delay: -5s; clip-path: polygon(0 5%, 100% 0, 90% 30%, 65% 90%, 50% 100%, 30% 80%, 15% 45%); filter: drop-shadow(0 20px 30px rgba(0,0,0,0.9)) drop-shadow(0 -5px 20px rgba(168, 85, 247, 0.2)); }
-.far.island-3 { width: 250px; height: 180px; top: 85%; left: 25%; animation-delay: -10s; clip-path: polygon(10% 0, 100% 5%, 85% 50%, 60% 90%, 40% 100%, 20% 70%); }
+.far.island-1 {
+    width: 300px;
+    height: 200px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+    clip-path: polygon(5% 0, 95% 0, 80% 40%, 60% 80%, 45% 100%, 25% 60%);
+}
+
+.far.island-2 {
+    width: 450px;
+    height: 300px;
+    top: 60%;
+    right: 15%;
+    animation-delay: -5s;
+    clip-path: polygon(0 5%, 100% 0, 90% 30%, 65% 90%, 50% 100%, 30% 80%, 15% 45%);
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 20px rgba(168, 85, 247, 0.2));
+}
+
+.far.island-3 {
+    width: 250px;
+    height: 180px;
+    top: 85%;
+    left: 25%;
+    animation-delay: -10s;
+    clip-path: polygon(10% 0, 100% 5%, 85% 50%, 60% 90%, 40% 100%, 20% 70%);
+}
 
 /* Mid Islands */
-.mid.island-4 { width: 600px; height: 350px; top: 15%; right: 5%; animation-delay: -2s; clip-path: polygon(2% 0, 98% 5%, 80% 60%, 55% 100%, 45% 90%, 20% 50%); filter: drop-shadow(0 30px 40px rgba(0,0,0,0.9)) drop-shadow(0 -5px 30px rgba(59, 130, 246, 0.3)); }
-.mid.island-5 { width: 500px; height: 280px; top: 70%; left: 5%; animation-delay: -8s; clip-path: polygon(0 0, 95% 0, 85% 45%, 65% 85%, 50% 100%, 35% 75%, 10% 40%); filter: drop-shadow(0 25px 35px rgba(0,0,0,0.9)) drop-shadow(0 -5px 25px rgba(45, 212, 191, 0.3)); }
+.mid.island-4 {
+    width: 600px;
+    height: 350px;
+    top: 15%;
+    right: 5%;
+    animation-delay: -2s;
+    clip-path: polygon(2% 0, 98% 5%, 80% 60%, 55% 100%, 45% 90%, 20% 50%);
+    filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 30px rgba(59, 130, 246, 0.3));
+}
+
+.mid.island-5 {
+    width: 500px;
+    height: 280px;
+    top: 70%;
+    left: 5%;
+    animation-delay: -8s;
+    clip-path: polygon(0 0, 95% 0, 85% 45%, 65% 85%, 50% 100%, 35% 75%, 10% 40%);
+    filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 25px rgba(45, 212, 191, 0.3));
+}
 
 /* Ambient Glow */
 .ambient-glow {
@@ -166,31 +220,66 @@ a:hover {
 /* Fog System */
 .fog-container {
     pointer-events: none;
-    width: 200vw; /* Double width for infinite looping */
+    width: 200vw;
+    /* Double width for infinite looping */
     height: 100%;
 }
+
 .fog-texture {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     width: 50vw;
     height: 80vh;
-    background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.15) 0%, rgba(0,0,0,0) 70%);
+    background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
     filter: blur(40px);
 }
-.fog-1 { left: 0; animation: fog-drift 60s linear infinite; background: radial-gradient(ellipse at center, rgba(45, 212, 191, 0.1) 0%, rgba(0,0,0,0) 70%); }
-.fog-2 { left: 50vw; animation: fog-drift 75s linear infinite reverse; }
-.fog-3 { left: 20vw; height: 60vh; background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%); animation: fog-drift 45s linear infinite; }
-.fog-4 { left: 70vw; height: 70vh; background: radial-gradient(ellipse at center, rgba(45, 212, 191, 0.2) 0%, rgba(0,0,0,0) 70%); animation: fog-drift 50s linear infinite reverse; }
+
+.fog-1 {
+    left: 0;
+    animation: fog-drift 60s linear infinite;
+    background: radial-gradient(ellipse at center, rgba(45, 212, 191, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+.fog-2 {
+    left: 50vw;
+    animation: fog-drift 75s linear infinite reverse;
+}
+
+.fog-3 {
+    left: 20vw;
+    height: 60vh;
+    background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+    animation: fog-drift 45s linear infinite;
+}
+
+.fog-4 {
+    left: 70vw;
+    height: 70vh;
+    background: radial-gradient(ellipse at center, rgba(45, 212, 191, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+    animation: fog-drift 50s linear infinite reverse;
+}
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-30px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-30px);
+    }
 }
 
 @keyframes fog-drift {
-    0% { transform: translate(0, -50%); }
-    100% { transform: translate(-50vw, -50%); }
+    0% {
+        transform: translate(0, -50%);
+    }
+
+    100% {
+        transform: translate(-50vw, -50%);
+    }
 }
 
 /* Foreground Content */
@@ -239,7 +328,7 @@ nav a {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 
+    box-shadow:
         0 25px 50px -12px rgba(0, 0, 0, 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
@@ -458,21 +547,28 @@ footer {
         padding: 2rem;
         margin: 5rem 0;
     }
-    
+
     .island {
-        display: none; /* Hide complex background forms on mobile for performance */
+        display: none;
+        /* Hide complex background forms on mobile for performance */
     }
-    
-    .depth-4, .depth-3, .depth-2, .depth-1 {
+
+    .depth-4,
+    .depth-3,
+    .depth-2,
+    .depth-1 {
         transform: none;
     }
+
     .parallax-wrapper {
         perspective: none;
         overflow-y: auto;
     }
+
     .parallax-layer {
         position: relative;
     }
+
     .fog-container {
         display: none;
     }
