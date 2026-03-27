@@ -18,8 +18,9 @@
     <!-- SVG Filter for Edge Wobble Effect -->
     <svg style="width: 0; height: 0; position: absolute;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
         <filter id="wobble">
-            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise">
-                <animate attributeName="baseFrequency" values="0.05;0.06;0.05" dur="3s" repeatCount="indefinite" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="8" result="noise">
+                <animate attributeName="baseFrequency" values="0.05;0.052;0.05" dur="1s" repeatCount="indefinite"
+                    calcMode="spline" keyTimes="0; 0.5; 1" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1" />
             </feTurbulence>
             <feDisplacementMap id="wobble-displacement" in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R"
                 yChannelSelector="B" />
