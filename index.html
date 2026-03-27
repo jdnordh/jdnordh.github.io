@@ -18,11 +18,30 @@
     <!-- SVG Filter for Edge Wobble Effect -->
     <svg style="width: 0; height: 0; position: absolute;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
         <filter id="wobble">
-            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="8" result="noise">
-                <animate attributeName="baseFrequency" values="0.05;0.052;0.05" dur="1s" repeatCount="indefinite"
-                    calcMode="spline" keyTimes="0; 0.5; 1" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1" />
-            </feTurbulence>
-            <feDisplacementMap id="wobble-displacement" in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R"
+            <!-- 1. Generate a small tileable noise patch (200px) -->
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="8" stitchTiles="stitch" x="0" y="0" width="200" height="200" result="noise" />
+            
+            <!-- 2. Scroll the noise left (-200) inside its box -->
+            <feOffset in="noise" result="pan1" x="0" y="0" width="200" height="200">
+                <animate attributeName="dx" values="0; -200" dur="4s" repeatCount="indefinite" />
+            </feOffset>
+            
+            <!-- 3. Bring a second copy scrolling left from the right to fill the trailing gap -->
+            <feOffset in="noise" result="pan2" x="0" y="0" width="200" height="200">
+                <animate attributeName="dx" values="200; 0" dur="4s" repeatCount="indefinite" />
+            </feOffset>
+            
+            <!-- 4. Merge them into a continuously scrolling loop -->
+            <feMerge result="wrappedNoise" x="0" y="0" width="200" height="200">
+                <feMergeNode in="pan1" />
+                <feMergeNode in="pan2" />
+            </feMerge>
+            
+            <!-- 5. Tile endlessly to cover all elements -->
+            <feTile in="wrappedNoise" result="tiledNoise" />
+            
+            <!-- 6. Apply displacement using our scrolling tile -->
+            <feDisplacementMap id="wobble-displacement" in="SourceGraphic" in2="tiledNoise" scale="5" xChannelSelector="R"
                 yChannelSelector="B" />
         </filter>
     </svg>
