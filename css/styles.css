@@ -582,18 +582,12 @@ nav a {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    /* Same as original SVG base color */
+    /* Original SVG base color */
     background: radial-gradient(circle at center, rgba(45, 212, 191, 0.4) 0%, rgba(45, 212, 191, 0) 70%);
-}
-
-.contact-glow-reach {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    /* Varied color: softer purple */
-    background: radial-gradient(circle at center, rgba(168, 85, 247, 0.45) 0%, rgba(168, 85, 247, 0) 65%);
-    transition: transform 0.8s ease-out;
-    transform: translate(var(--reach-x, 0px), var(--reach-y, 0px));
+    /* Apply the wobbly edge filter */
+    filter: url('#wobble');
+    /* Upscale slightly to prevent clipping on the bounding box */
+    transform: scale(1.1);
 }
 
 .social-links {
