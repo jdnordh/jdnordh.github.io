@@ -23,28 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Subtle mouse parallax effect for foreground elements 
-    // to give it that extra "floating" alive feel
+    // 3. (Removed JS 3D hover effect, CSS handles simple vertical lift)
     const wrapper = document.querySelector('.parallax-wrapper');
-    const contentIslands = document.querySelectorAll('.content-island');
-    
-    wrapper.addEventListener('mousemove', (e) => {
-        // Calculate mouse position relative to center of screen (-1 to 1)
-        const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
-        const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
-        
-        contentIslands.forEach(island => {
-            // Apply subtle rotation and translation
-            island.style.transform = `translateY(-5px) perspective(1000px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
-    });
-    
-    // Reset transform on mouse leave
-    wrapper.addEventListener('mouseleave', () => {
-        contentIslands.forEach(island => {
-            island.style.transform = 'translateY(0) perspective(1000px) rotateY(0deg) rotateX(0deg)';
-        });
-    });
 
     // 4. Depth-based blur adjustments on scroll (Bonus)
     const farIslands = document.querySelector('.depth-4');
