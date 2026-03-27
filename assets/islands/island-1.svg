@@ -290,43 +290,43 @@
       <path
          id="path21"
          d="m 0,0 3.427,-53.717 20.562,-28.009 2.294,-24.385 25.57,-13.179 20.153,-26.033 26.585,19.112 9.674,46.463 20.903,29.326 4.935,41.045 z"
-         style="fill:#7e2b1a;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         style="fill:#2e2e3c;fill-opacity:1;fill-rule:evenodd;stroke:none"
          transform="matrix(1.3333333,0,0,-1.3333333,51.009733,315.22067)"
          clip-path="url(#clipPath22)" />
       <path
          id="path23"
          d="m 0,0 3.658,-29.578 21.345,-11.618 1.319,-29.327 13.51,25.539 23.726,-3.131 8.237,-72.493 13.296,71.573 14.711,2.896 6.263,-17.464 8.235,23.396 10.875,8.238 3.993,-18.453 4.935,41.045 z"
-         style="fill:#4c1f15;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         style="fill:#24242e;fill-opacity:1;fill-rule:evenodd;stroke:none"
          transform="matrix(1.3333333,0,0,-1.3333333,51.009733,315.22067)"
          clip-path="url(#clipPath24)" />
       <path
          id="path25"
          d="M 0,0 V 14.499 L 143.668,-3.954 v -14.497 l -61.29,-27.022 -75.129,9.886 z"
-         style="fill:#769a2a;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         style="fill:#2f3a4a;fill-opacity:1;fill-rule:evenodd;stroke:none"
          transform="matrix(1.3333333,0,0,-1.3333333,47.6556,298.7552)"
          clip-path="url(#clipPath26)" />
       <path
          id="path27"
          d="m 0,0 43.496,17.134 71.834,-4.613 28.338,-30.974 -61.29,-27.021 -75.129,9.887 z"
-         style="fill:#87b027;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         style="fill:#3a4554;fill-opacity:1;fill-rule:evenodd;stroke:none"
          transform="matrix(1.3333333,0,0,-1.3333333,47.6556,279.42253)"
          clip-path="url(#clipPath28)" />
       <path
          id="path29"
          d="M 0,0 29.697,11.699 78.742,8.55 98.091,-12.598 56.245,-31.045 4.95,-24.297 Z"
-         style="fill:#9ac421;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         style="fill:#465160;fill-opacity:1;fill-rule:evenodd;stroke:none"
          transform="matrix(1.3333333,0,0,-1.3333333,63.394533,278.7064)"
          clip-path="url(#clipPath30)" />
       <path
          id="path31"
          d="M 0,0 16.835,6.631 44.639,4.846 55.609,-7.143 31.886,-17.602 2.806,-13.775 Z"
-         style="fill:#adda1a;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         style="fill:#525e6f;fill-opacity:1;fill-rule:evenodd;stroke:none"
          transform="matrix(1.3333333,0,0,-1.3333333,77.36,277.4916)"
          clip-path="url(#clipPath32)" />
       <path
          id="path33"
          d="M 0,0 17.338,13.676 14.373,43.002 33.814,6.755 25.57,-13.179 Z M 45.723,-39.212 58.65,-5.147 61.616,31.592 71.171,29.287 73.478,1.771 72.308,-20.1 Z m 36.259,65.575 9.785,31.262 11.118,-1.937 z M -22.855,52.394 -21.048,71.67 -2.294,24.385 Z"
-         style="fill:#a33b1f;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         style="fill:#353642;fill-opacity:1;fill-rule:evenodd;stroke:none"
          transform="matrix(1.3333333,0,0,-1.3333333,86.053333,456.70187)"
          clip-path="url(#clipPath34)" />
     </g>
