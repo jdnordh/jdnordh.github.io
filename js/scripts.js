@@ -46,4 +46,42 @@ document.addEventListener('DOMContentLoaded', () => {
             midIslands.style.filter = `blur(${midBlur}px)`;
         }
     }, { passive: true });
+
+    // 5. Contact Orb "Reach Out" Effect
+    const contactIsland = document.querySelector('.contact-island');
+    const contactContainer = document.querySelector('.contact-glow-container');
+    const contactReach = document.querySelector('.contact-glow-reach');
+    
+    if (contactIsland && contactContainer && contactReach) {
+        contactIsland.addEventListener('mousemove', (e) => {
+            const rect = contactContainer.getBoundingClientRect();
+            // Calculate mouse position relative to center of the actual orb
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const deltaX = e.clientX - centerX;
+            const deltaY = e.clientY - centerY;
+            
+            // Constrain the reach radius (max 60px distance physically moved)
+            const maxReach = 60;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            let reachX = deltaX;
+            let reachY = deltaY;
+            
+            if (distance > maxReach) {
+                const ratio = maxReach / distance;
+                reachX *= ratio;
+                reachY *= ratio;
+            }
+            // Move orb slightly towards mouse
+            contactReach.style.setProperty('--reach-x', `${reachX}px`);
+            contactReach.style.setProperty('--reach-y', `${reachY}px`);
+        });
+        
+        // Reset when mouse leaves
+        contactIsland.addEventListener('mouseleave', () => {
+            contactReach.style.setProperty('--reach-x', `0px`);
+            contactReach.style.setProperty('--reach-y', `0px`);
+        });
+    }
 });
