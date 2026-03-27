@@ -11,8 +11,13 @@
     --blue-glow: #3b82f6;
 
     /* Island Colors */
+    --rock-color-darkest: #24242e;
+    --rock-color-darker: #2e2e3c;
+    --rock-color-dark: #353642;
     --rock-color-light: #2f3a4a;
-    --rock-color-dark: #09090b;
+    --rock-color-lighter: #3a4554;
+    --rock-color-lighter-2: #465160;
+    --rock-color-lightest: #525e6f;
 
     /* Fonts */
     --font-heading: 'Outfit', sans-serif;
@@ -152,9 +157,14 @@ a:hover {
 
 .island {
     position: absolute;
-    background: radial-gradient(ellipse at 50% 0%, var(--rock-color-light), var(--rock-color-dark));
+    background-repeat: no-repeat;
+    background-size: contain;
+    /* ADJUST OFFSET VARIABLE TO FIX ISLAND GRAPHIC POSITIONING IF NEEDED */
+    --island-offset-y: 0px;
+    background-position: center var(--island-offset-y);
+    scale: 2;
     animation: float 20s ease-in-out infinite;
-    /* Apply drop-shadow for the glow relative to the new clip path shape */
+    /* Apply drop-shadow for the glow relative to the SVG alpha channel */
     filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 20px rgba(45, 212, 191, 0.4));
 }
 
@@ -165,7 +175,8 @@ a:hover {
     top: 20%;
     left: 10%;
     animation-delay: 0s;
-    clip-path: polygon(0 10%, 2% 4%, 6% 1%, 12% 0, 88% 0, 94% 1%, 98% 4%, 100% 10%, 98% 25%, 95% 35%, 88% 45%, 92% 55%, 82% 70%, 85% 80%, 75% 95%, 65% 85%, 55% 100%, 45% 90%, 35% 98%, 25% 80%, 18% 90%, 12% 70%, 5% 55%, 8% 40%, 2% 25%);
+    background-image: url('../assets/islands/island-1.svg');
+    --island-offset-y: 0px;
 }
 
 .far.island-2 {
@@ -174,8 +185,9 @@ a:hover {
     top: 60%;
     right: 15%;
     animation-delay: -5s;
-    clip-path: polygon(0 12%, 3% 5%, 8% 2%, 15% 0, 85% 0, 92% 2%, 97% 5%, 100% 12%, 97% 20%, 99% 30%, 90% 45%, 95% 60%, 85% 75%, 80% 90%, 70% 80%, 65% 100%, 55% 85%, 45% 95%, 35% 80%, 30% 92%, 20% 75%, 15% 85%, 8% 65%, 12% 50%, 4% 35%, 1% 20%);
+    background-image: url('../assets/islands/island-2.svg');
     filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 20px rgba(168, 85, 247, 0.2));
+    --island-offset-y: 0px;
 }
 
 .far.island-3 {
@@ -184,28 +196,64 @@ a:hover {
     top: 85%;
     left: 25%;
     animation-delay: -10s;
-    clip-path: polygon(0 8%, 2% 3%, 5% 1%, 10% 0, 90% 0, 95% 1%, 98% 3%, 100% 8%, 99% 22%, 95% 30%, 90% 40%, 85% 55%, 88% 65%, 75% 75%, 70% 85%, 62% 78%, 55% 95%, 50% 100%, 45% 92%, 38% 80%, 30% 88%, 20% 70%, 12% 60%, 18% 45%, 8% 35%, 4% 20%, 1% 12%);
+    background-image: url('../assets/islands/island-3.svg');
+    --island-offset-y: 0px;
 }
 
 /* Mid Islands */
 .mid.island-4 {
     width: 600px;
-    height: 350px;
+    height: 600px;
     top: 15%;
     right: 5%;
     animation-delay: -2s;
-    clip-path: polygon(0 15%, 4% 6%, 10% 1%, 18% 0, 82% 0, 90% 1%, 96% 6%, 100% 15%, 98% 28%, 94% 38%, 88% 50%, 92% 62%, 82% 75%, 75% 85%, 68% 78%, 62% 95%, 55% 85%, 48% 98%, 42% 88%, 35% 95%, 28% 80%, 20% 88%, 15% 72%, 18% 55%, 10% 42%, 5% 30%, 2% 20%);
+    background-image: url('../assets/islands/island-1.svg');
     filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 30px rgba(59, 130, 246, 0.3));
+    --island-offset-y: 0px;
 }
 
 .mid.island-5 {
     width: 500px;
-    height: 280px;
+    height: 500px;
+    color: #FFF;
     top: 70%;
     left: 5%;
     animation-delay: -8s;
-    clip-path: polygon(0 10%, 2% 4%, 6% 1%, 15% 0, 85% 0, 94% 1%, 98% 4%, 100% 10%, 96% 25%, 98% 40%, 88% 55%, 94% 68%, 82% 82%, 75% 98%, 65% 85%, 58% 100%, 48% 90%, 40% 98%, 32% 82%, 24% 95%, 18% 75%, 12% 82%, 8% 60%, 12% 45%, 4% 30%, 2% 15%);
+    background-image: url('../assets/islands/island-2.svg');
     filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 25px rgba(45, 212, 191, 0.3));
+    --island-offset-y: 0px;
+}
+
+/* Supplemental Deep Islands */
+.far.island-6 {
+    width: 350px;
+    height: 350px;
+    top: 140%;
+    right: 8%;
+    animation-delay: -3s;
+    background-image: url('../assets/islands/island-3.svg');
+    --island-offset-y: 0px;
+}
+
+.far.island-7 {
+    width: 220px;
+    height: 220px;
+    top: 210%;
+    left: 12%;
+    animation-delay: -6s;
+    background-image: url('../assets/islands/island-1.svg');
+    --island-offset-y: 0px;
+}
+
+.mid.island-8 {
+    width: 500px;
+    height: 500px;
+    top: 160%;
+    left: 2%;
+    animation-delay: -11s;
+    background-image: url('../assets/islands/island-2.svg');
+    filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 30px rgba(59, 130, 246, 0.3));
+    --island-offset-y: 0px;
 }
 
 /* Ambient Glow */
