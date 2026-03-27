@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jordan Nordh | Software Developer</title>
+    <meta name="description" content="Portfolio of Jordan Nordh - Building thoughtful software that scales with clarity and intention.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="parallax-wrapper">
+        
+        <!-- Layer 1: Far Background Islands -->
+        <div class="parallax-layer parallax-layer-base depth-4 far-islands-container">
+            <div class="island far island-1"></div>
+            <div class="island far island-2"></div>
+            <div class="island far island-3"></div>
+            <div class="ambient-glow"></div>
+        </div>
+
+        <!-- Layer 2: Far Fog -->
+        <div class="parallax-layer parallax-layer-base depth-3 fog-container far-fog">
+            <div class="fog-texture fog-1"></div>
+            <div class="fog-texture fog-2"></div>
+        </div>
+
+        <!-- Layer 3: Mid Background Islands -->
+        <div class="parallax-layer parallax-layer-base depth-2 mid-islands-container">
+            <div class="island mid island-4"></div>
+            <div class="island mid island-5"></div>
+            <div class="particle-system" id="particles-1"></div>
+        </div>
+
+        <!-- Layer 4: Mid Fog -->
+        <div class="parallax-layer parallax-layer-base depth-1 fog-container mid-fog">
+            <div class="fog-texture fog-3"></div>
+            <div class="fog-texture fog-4"></div>
+        </div>
+
+        <!-- Layer 5: Foreground (Content) -->
+        <div class="parallax-layer parallax-layer-base depth-0 content-layer">
+            
+            <header class="navbar">
+                <div class="logo">JN</div>
+                <nav>
+                    <a href="#about">About</a>
+                    <a href="#projects">Work</a>
+                    <a href="#toolbox">Toolbox</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+            </header>
+
+            <main class="content-container">
+                <!-- 1. Hero Section -->
+                <section id="hero" class="content-island hero-island glow-primary">
+                    <div class="island-content">
+                        <h1>Jordan Nordh</h1>
+                        <p class="tagline">Building thoughtful software that scales with clarity and intention.</p>
+                        <p class="subtext">Backend-focused developer with a product mindset. I care about clean systems, strong teams, and shipping things that actually matter.</p>
+                        <div class="cta-group">
+                            <a href="#projects" class="btn btn-primary">View Projects</a>
+                            <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. About Me -->
+                <section id="about" class="content-island about-island glow-secondary">
+                    <div class="island-content">
+                        <h2>About</h2>
+                        <div class="text-content">
+                            <p>I’m a software developer who enjoys turning complex ideas into clean, reliable systems.</p>
+                            <p>My background is primarily in backend development, working with .NET and modern application architecture. Over time, I’ve naturally moved toward a more product-focused role—collaborating closely with stakeholders, shaping requirements, and helping teams ship better software, faster.</p>
+                            <p>I care a lot about how things are built. Not just that they work—but that they’re maintainable, testable, and make sense to the next person who reads the code.</p>
+                            <p>Lately, I’ve been especially interested in how AI can be integrated into real-world products in a practical way—not just as a feature, but as a way to rethink how software gets built.</p>
+                            <p>Outside of coding, I’m usually playing hockey or thinking about how to improve systems—technical or otherwise.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Projects Section -->
+                <section id="projects" class="content-island projects-island glow-tertiary">
+                    <div class="island-content">
+                        <h2>Selected Work</h2>
+                        <p class="intro-line">A few things I’ve built or contributed to. Each one reflects how I think about solving problems and building software that lasts.</p>
+                        
+                        <div class="projects-grid">
+                            <article class="project-card">
+                                <h3>AI-Driven Feature Development</h3>
+                                <p>Integrated AI agents into the development workflow to reduce time-to-delivery and improve iteration speed across features.</p>
+                                <div class="tech-stack">
+                                    <span>.NET</span><span>AI APIs</span><span>REST</span>
+                                </div>
+                                <a href="#" class="project-link">View on GitHub →</a>
+                            </article>
+                            
+                            <article class="project-card">
+                                <h3>Scalable Backend Services</h3>
+                                <p>Designed and implemented backend systems focused on reliability, performance, and long-term maintainability.</p>
+                                <div class="tech-stack">
+                                    <span>ASP.NET</span><span>C#</span><span>SQL</span>
+                                </div>
+                                <a href="#" class="project-link">View on GitHub →</a>
+                            </article>
+                            
+                            <article class="project-card">
+                                <h3>Testing & Quality Initiative</h3>
+                                <p>Led efforts to improve code quality through better unit testing, stricter PR standards, and improved team practices.</p>
+                                <div class="tech-stack">
+                                    <span>MSTest</span><span>Moq</span>
+                                </div>
+                                <a href="#" class="project-link">View on GitHub →</a>
+                            </article>
+                            
+                            <article class="project-card">
+                                <h3>Personal Project / Experimentation</h3>
+                                <p>Exploring ideas around developer tools, automation, and AI-assisted workflows.</p>
+                                <div class="tech-stack">
+                                    <span>Varies</span>
+                                </div>
+                                <a href="#" class="project-link">View on GitHub →</a>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Skills / Toolbox -->
+                <section id="toolbox" class="content-island toolbox-island glow-primary">
+                    <div class="island-content">
+                        <h2>Toolbox</h2>
+                        
+                        <div class="skills-container">
+                            <div class="skill-category">
+                                <h3>Backend</h3>
+                                <ul>
+                                    <li>C#</li>
+                                    <li>.NET / ASP.NET</li>
+                                    <li>REST APIs</li>
+                                    <li>SQL</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <h3>Frontend</h3>
+                                <ul>
+                                    <li>JavaScript</li>
+                                    <li>HTML / CSS</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <h3>Practices</h3>
+                                <ul>
+                                    <li>Unit Testing (MSTest, Moq)</li>
+                                    <li>Code Reviews</li>
+                                    <li>Agile / Scrum</li>
+                                    <li>System Design</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <h3>Currently Exploring</h3>
+                                <ul>
+                                    <li>AI-assisted development</li>
+                                    <li>Automation workflows</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. Contact Section -->
+                <section id="contact" class="content-island contact-island glow-secondary">
+                    <div class="island-content">
+                        <h2>Let’s Connect</h2>
+                        <img src="assets/images/contact-glow.svg" alt="" class="bg-asset contact-glow" />
+                        
+                        <p>If you’re building something interesting, I’d love to hear about it.</p>
+                        <p>Whether it’s a project, an idea, or just a conversation—feel free to reach out.</p>
+                        
+                        <div class="social-links">
+                            <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="social-btn">GitHub</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="social-btn">LinkedIn</a>
+                            <a href="mailto:email@example.com" class="social-btn">Email</a>
+                        </div>
+                    </div>
+                </section>
+                
+                <footer>
+                    <p>&copy; <span id="year"></span> Jordan Nordh. Built with intention.</p>
+                </footer>
+            </main>
+        </div>
+    </div>
+    
+    <script src="js/scripts.js"></script>
+</body>
+</html>
