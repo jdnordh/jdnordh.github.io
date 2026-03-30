@@ -76,6 +76,10 @@ p {
     color: var(--text-muted);
 }
 
+.bold-paragraph {
+    font-weight: 800;
+}
+
 a {
     color: var(--teal-glow);
     text-decoration: none;
