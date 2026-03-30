@@ -114,28 +114,26 @@ a:hover {
 
 /* Depth Layers */
 .depth-4 {
-    transform: translateZ(-6px) scale(3.5);
+    transform: translateZ(-6px) scale(2);
     z-index: 1;
     opacity: 0.85;
-    filter: blur(2px);
 }
 
 .depth-3 {
-    transform: translateZ(-4.5px) scale(2.6);
+    transform: translateZ(-4.5px) scale(1.6);
     z-index: 2;
     opacity: 0.15;
     mix-blend-mode: screen;
 }
 
 .depth-2 {
-    transform: translateZ(-3px) scale(2.1);
+    transform: translateZ(-3px) scale(1.4);
     z-index: 3;
     opacity: 0.95;
-    filter: blur(1px);
 }
 
 .depth-1 {
-    transform: translateZ(-1.5px) scale(1.6);
+    transform: translateZ(-1.5px) scale(1.2);
     z-index: 4;
     opacity: 0.2;
     mix-blend-mode: screen;
@@ -209,8 +207,8 @@ a:hover {
 .mid.island-4 {
     width: 600px;
     height: 600px;
-    top: 15%;
-    right: 5%;
+    top: 20%;
+    left: 60%;
     animation-delay: -2s;
     background-image: url('../assets/islands/island-1.svg');
     filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 30px rgba(59, 130, 246, 0.3));
@@ -272,49 +270,6 @@ a:hover {
     height: 100vh;
     background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0) 0%, rgba(5, 11, 20, 1) 100%);
     pointer-events: none;
-}
-
-/* Fog System */
-.fog-container {
-    pointer-events: none;
-    width: 200vw;
-    /* Double width for infinite looping */
-    height: 100%;
-}
-
-.fog-texture {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50vw;
-    height: 80vh;
-    background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-    filter: blur(40px);
-}
-
-.fog-1 {
-    left: 0;
-    animation: fog-drift 60s linear infinite;
-    background: radial-gradient(ellipse at center, rgba(45, 212, 191, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
-}
-
-.fog-2 {
-    left: 50vw;
-    animation: fog-drift 75s linear infinite reverse;
-}
-
-.fog-3 {
-    left: 20vw;
-    height: 60vh;
-    background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-    animation: fog-drift 45s linear infinite;
-}
-
-.fog-4 {
-    left: 70vw;
-    height: 70vh;
-    background: radial-gradient(ellipse at center, rgba(45, 212, 191, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
-    animation: fog-drift 50s linear infinite reverse;
 }
 
 @keyframes float {
