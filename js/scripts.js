@@ -132,10 +132,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let targetIslandIdx = 0;
     
     // Track Mouse
+    let isTouchDevice = window.matchMedia("(pointer: coarse)").matches || ('ontouchstart' in window);
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     
+    window.addEventListener('resize', () => {
+        isTouchDevice = window.matchMedia("(pointer: coarse)").matches || ('ontouchstart' in window);
+    });
+
     wrapper.addEventListener('mousemove', (e) => {
+        if (isTouchDevice) return;
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
@@ -202,6 +208,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Main Loop
         function engineTick() {
+            if (isTouchDevice) {
+                mouseX = window.innerWidth / 2;
+                mouseY = window.innerHeight / 2;
+            }
+
             // Find closest island dynamically
             let closestIsland = islands[targetIslandIdx];
             let minDist = Infinity;
