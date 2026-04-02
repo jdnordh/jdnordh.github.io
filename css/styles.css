@@ -177,7 +177,7 @@ a:hover {
     background-image: url('../assets/islands/island-1.svg');
     /* Adjust offsets to center the visual mass over the bounding box */
     --island-offset-x: 70px;
-    --island-offset-y: 32px;
+    --island-offset-y: 22px;
     width: var(--island-width, 300px);
     height: var(--island-height, 200px);
 }
@@ -185,7 +185,7 @@ a:hover {
 .type-island-2 {
     background-image: url('../assets/islands/island-2.svg');
     --island-offset-x: 0px;
-    --island-offset-y: 0px;
+    --island-offset-y: -10px;
     --drop-shadow-color: rgba(168, 85, 247, 0.2);
     width: var(--island-width, 450px);
     height: var(--island-height, 300px);
@@ -194,7 +194,7 @@ a:hover {
 .type-island-3 {
     background-image: url('../assets/islands/island-3.svg');
     --island-offset-x: -55px;
-    --island-offset-y: 28px;
+    --island-offset-y: 18px;
     --drop-shadow-color: rgba(59, 130, 246, 0.3);
     width: var(--island-width, 250px);
     height: var(--island-height, 180px);
@@ -234,8 +234,8 @@ a:hover {
     position: absolute;
     top: -12px;
     left: 2px;
-    width: 32px;
-    height: 32px;
+    width: 16px;
+    height: 16px;
     background: #111;
     border-radius: 50%;
     transform-origin: bottom center;
