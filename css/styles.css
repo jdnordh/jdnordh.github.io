@@ -118,26 +118,26 @@ a:hover {
 
 /* Depth Layers */
 .depth-4 {
-    transform: translateZ(-6px) scale(2);
+    transform: translateZ(-3px) scale(2);
     z-index: 1;
     opacity: 0.85;
 }
 
 .depth-3 {
-    transform: translateZ(-4.5px) scale(1.6);
+    transform: translateZ(-2.25px) scale(1.75);
     z-index: 2;
     opacity: 0.15;
     mix-blend-mode: screen;
 }
 
 .depth-2 {
-    transform: translateZ(-3px) scale(1.4);
+    transform: translateZ(-1.5px) scale(1.5);
     z-index: 3;
     opacity: 0.95;
 }
 
 .depth-1 {
-    transform: translateZ(-1.5px) scale(1.2);
+    transform: translateZ(-0.75px) scale(1.25);
     z-index: 4;
     opacity: 0.2;
     mix-blend-mode: screen;
@@ -161,110 +161,160 @@ a:hover {
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
-    /* ADJUST OFFSET VARIABLE TO FIX ISLAND GRAPHIC POSITIONING IF NEEDED */
+    /* Default offset properties, overridden by type classes */
     --island-offset-x: 0px;
     --island-offset-y: 0px;
     background-position: calc(50% + var(--island-offset-x)) calc(50% + var(--island-offset-y));
-    scale: 2;
+    scale: var(--island-scale, 2);
     animation: float 20s ease-in-out infinite;
-    /* Apply drop-shadow for the glow relative to the SVG alpha channel */
-    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 20px rgba(45, 212, 191, 0.4));
+    animation-delay: var(--island-delay, 0s);
+    /* Base drop-shadow relative to the SVG alpha channel */
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 20px var(--drop-shadow-color, rgba(45, 212, 191, 0.4)));
 }
 
-/* Far Islands */
-.far.island-1 {
-    width: 300px;
-    height: 200px;
-    top: 15%;
-    left: 21%;
-    scale: 2.5;
-    animation-delay: 0s;
+/* Island Types (SVGs & Offsets) */
+.type-island-1 {
     background-image: url('../assets/islands/island-1.svg');
-    --island-offset-x: 0px;
-    --island-offset-y: 0px;
+    /* Adjust offsets to center the visual mass over the bounding box */
+    --island-offset-x: 70px;
+    --island-offset-y: 22px;
+    width: var(--island-width, 300px);
+    height: var(--island-height, 200px);
 }
 
-.far.island-2 {
-    width: 450px;
-    height: 300px;
-    top: 60%;
-    right: 15%;
-    animation-delay: -5s;
+.type-island-2 {
     background-image: url('../assets/islands/island-2.svg');
-    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 20px rgba(168, 85, 247, 0.2));
-    --island-offset-x: 80px;
-    --island-offset-y: 0px;
+    --island-offset-x: 0px;
+    --island-offset-y: -10px;
+    --drop-shadow-color: rgba(168, 85, 247, 0.2);
+    width: var(--island-width, 450px);
+    height: var(--island-height, 300px);
 }
 
-.far.island-3 {
-    width: 250px;
-    height: 180px;
-    top: 85%;
-    left: 20%;
-    animation-delay: -10s;
+.type-island-3 {
     background-image: url('../assets/islands/island-3.svg');
-    --island-offset-x: 0px;
-    --island-offset-y: 0px;
+    --island-offset-x: -55px;
+    --island-offset-y: 18px;
+    --drop-shadow-color: rgba(59, 130, 246, 0.3);
+    width: var(--island-width, 250px);
+    height: var(--island-height, 180px);
 }
 
-/* Mid Islands */
-.mid.island-4 {
-    width: 600px;
-    height: 600px;
-    top: 20%;
-    left: 60%;
-    animation-delay: -2s;
-    background-image: url('../assets/islands/island-1.svg');
-    filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 30px rgba(59, 130, 246, 0.3));
-    --island-offset-x: 120px;
-    --island-offset-y: 0px;
+/* Animated Ninja Character */
+.ninja {
+    position: absolute;
+    width: 24px;
+    height: 36px;
+    /* Starts off hidden until initialized */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 100;
+
+    /* We'll use custom properties to drive physics engine transforms */
+    transform: translate3d(var(--ninja-x, 0px), var(--ninja-y, 0px), var(--ninja-z, 0px)) scale(var(--ninja-scale, 1));
 }
 
-.mid.island-5 {
-    width: 500px;
-    height: 500px;
-    top: 70%;
-    left: 5%;
-    animation-delay: -8s;
-    background-image: url('../assets/islands/island-2.svg');
-    filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 25px rgba(45, 212, 191, 0.3));
-    --island-offset-x: 0px;
-    --island-offset-y: 0px;
+.ninja.visible {
+    opacity: 1;
 }
 
-/* Supplemental Far Islands */
-.far.island-6 {
-    width: 350px;
-    height: 350px;
-    top: 140%;
-    right: 8%;
-    animation-delay: -3s;
-    background-image: url('../assets/islands/island-3.svg');
-    --island-offset-x: 0px;
-    --island-offset-y: 0px;
+/* Ninja Body parts */
+.ninja-body {
+    position: absolute;
+    bottom: 0px;
+    width: 20px;
+    height: 24px;
+    background: #111;
+    border-radius: 10px 10px 4px 4px;
+    left: 2px;
 }
 
-.far.island-7 {
-    width: 220px;
-    height: 220px;
-    top: 210%;
-    left: 12%;
-    animation-delay: -6s;
-    background-image: url('../assets/islands/island-1.svg');
-    --island-offset-x: 0px;
-    --island-offset-y: 0px;
+.ninja-head {
+    position: absolute;
+    top: -12px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: #111;
+    border-radius: 50%;
+    transform-origin: bottom center;
 }
 
-.mid.island-8 {
-    width: 500px;
-    height: 500px;
-    top: 160%;
-    left: 2%;
-    animation-delay: -11s;
-    background-image: url('../assets/islands/island-2.svg');
-    filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.9)) drop-shadow(0 -5px 30px rgba(59, 130, 246, 0.3));
-    --island-offset-x: 0px;
-    --island-offset-y: 0px;
+/* The Headband */
+.ninja-headband {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--teal-glow);
+    box-shadow: 0 0 8px var(--teal-glow);
+}
+
+.ninja-headband-trail {
+    position: absolute;
+    top: 4px;
+    right: -10px;
+    width: 14px;
+    height: 3px;
+    background: var(--teal-glow);
+    box-shadow: 0 0 8px var(--teal-glow);
+    transform-origin: left center;
+    animation: flap 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes flap {
+    0% {
+        transform: rotate(10deg);
+    }
+
+    100% {
+        transform: rotate(30deg);
+    }
+}
+
+/* Base Idle Animation */
+.ninja.idle .ninja-body {
+    animation: breathe 2s ease-in-out infinite alternate;
+}
+
+.ninja.idle .ninja-head {
+    animation: nod 2s ease-in-out infinite alternate;
+}
+
+.ninja.jumping .ninja-headband-trail {
+    animation: flap-fast 0.1s ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+    0% {
+        transform: scaleY(1);
+    }
+
+    100% {
+        transform: scaleY(0.95);
+    }
+}
+
+@keyframes nod {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(1px);
+    }
+}
+
+@keyframes flap-fast {
+    0% {
+        transform: rotate(-10deg);
+    }
+
+    100% {
+        transform: rotate(40deg);
+    }
 }
 
 /* Ambient Glow */

@@ -92,4 +92,219 @@ document.addEventListener('DOMContentLoaded', () => {
             targetScale = baseScale;
         });
     }
+
+    // --- Ninja Engine & Island Configuration ---
+    const islands = [];
+    const islandNodes = document.querySelectorAll('.island');
+    const wrapperRectBase = wrapper.getBoundingClientRect(); // Useful for initial math
+
+    // 1. Initialize Islands from HTML data-* attributes
+    islandNodes.forEach((node, index) => {
+        const xPct = parseFloat(node.dataset.x || 0);
+        const yPct = parseFloat(node.dataset.y || 0);
+        const scale = parseFloat(node.dataset.scale || 1);
+        const delay = node.dataset.delay || '0s';
+        
+        node.style.left = `${xPct}%`;
+        node.style.top = `${yPct}%`;
+        if (node.dataset.scale) node.style.setProperty('--island-scale', scale);
+        node.style.setProperty('--island-delay', delay);
+
+        // Determine Ninja Depth Scale based on layer
+        const parentLayer = node.closest('.parallax-layer');
+        let ninjaScale = 1;
+        if (parentLayer) {
+            if (parentLayer.classList.contains('depth-4')) ninjaScale = 0.5; // Far
+            else if (parentLayer.classList.contains('depth-2')) ninjaScale = 0.75; // Mid
+        }
+        
+        islands.push({
+            node, 
+            id: index,
+            ninjaScale
+        });
+    });
+
+    // 2. Ninja Controller State
+    const ninjaEle = document.getElementById('ninja');
+    let isJumping = false;
+    let currentIslandIdx = 0; // Starts at first island
+    let targetIslandIdx = 0;
+    
+    // Track Mouse
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    
+    wrapper.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    if (islands.length > 0 && ninjaEle) {
+        // Init ninja visibility
+        ninjaEle.classList.add('visible');
+        
+        // Initial Ninja placement
+        const initRect = islands[0].node.getBoundingClientRect();
+        const initWrappRect = wrapper.getBoundingClientRect();
+        const initWx = (initRect.left - initWrappRect.left) + wrapper.scrollLeft + initRect.width / 2;
+        const initWy = (initRect.top - initWrappRect.top) + wrapper.scrollTop + initRect.height / 2;
+        
+        ninjaEle.style.setProperty('--ninja-x', `${initWx - 12}px`);
+        ninjaEle.style.setProperty('--ninja-y', `${initWy - 36}px`);
+        ninjaEle.style.setProperty('--ninja-scale', islands[0].ninjaScale);
+
+        // Pathfinding: Dijkstra over screen space
+        function getShortestPath(startIdx, targetIdx) {
+            const dist = [];
+            const prev = [];
+            const unvisited = new Set();
+            for(let i = 0; i < islands.length; i++) {
+                dist[i] = Infinity;
+                prev[i] = -1;
+                unvisited.add(i);
+            }
+            dist[startIdx] = 0;
+            
+            while(unvisited.size > 0) {
+                let u = -1;
+                let minD = Infinity;
+                for(let i of unvisited) {
+                    if(dist[i] < minD) { minD = dist[i]; u = i; }
+                }
+                if (u === -1 || u === targetIdx) break;
+                unvisited.delete(u);
+                
+                const uRect = islands[u].node.getBoundingClientRect();
+                const ux = uRect.left + uRect.width / 2;
+                const uy = uRect.top + uRect.height / 2;
+
+                for(let v of unvisited) {
+                    const vRect = islands[v].node.getBoundingClientRect();
+                    const vx = vRect.left + vRect.width / 2;
+                    const vy = vRect.top + vRect.height / 2;
+                    const cost = Math.hypot(ux - vx, uy - vy);
+                    
+                    if (dist[u] + cost < dist[v]) {
+                        dist[v] = dist[u] + cost;
+                        prev[v] = u;
+                    }
+                }
+            }
+            const path = [];
+            let curr = targetIdx;
+            while(curr !== -1) {
+                path.unshift(curr);
+                curr = prev[curr];
+            }
+            return path;
+        }
+
+        // Main Loop
+        function engineTick() {
+            // Find closest island dynamically
+            let closestIsland = islands[targetIslandIdx];
+            let minDist = Infinity;
+            
+            for(const island of islands) {
+                const rect = island.node.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                // Add an offset so it targets the visual top of the island slightly
+                const cy = rect.top + rect.height / 2;
+                
+                const dist = Math.hypot(cx - mouseX, cy - mouseY);
+                if (dist < minDist) {
+                    minDist = dist;
+                    closestIsland = island;
+                }
+            }
+            
+            targetIslandIdx = closestIsland.id;
+
+            // Trigger jump if idle
+            if (!isJumping && currentIslandIdx !== targetIslandIdx) {
+                const path = getShortestPath(currentIslandIdx, targetIslandIdx);
+                if (path.length > 1) {
+                    jumpTo(path[1]);
+                }
+            }
+
+            // Idle state anchoring (in case wrapper is scrolling)
+            if (!isJumping && currentIslandIdx === targetIslandIdx) {
+                const r = islands[currentIslandIdx].node.getBoundingClientRect();
+                const wRect = wrapper.getBoundingClientRect();
+                const wX = (r.left - wRect.left) + wrapper.scrollLeft + r.width / 2;
+                const wY = (r.top - wRect.top) + wrapper.scrollTop + r.height / 2;
+                ninjaEle.style.setProperty('--ninja-x', `${wX - 12}px`);
+                ninjaEle.style.setProperty('--ninja-y', `${wY - 36}px`);
+            }
+
+            requestAnimationFrame(engineTick);
+        }
+        
+        function jumpTo(nextIdx) {
+            isJumping = true;
+            ninjaEle.classList.remove('idle');
+            ninjaEle.classList.add('jumping');
+            
+            const startIsland = islands[currentIslandIdx];
+            const endIsland = islands[nextIdx];
+            
+            const startTime = performance.now();
+            // Dynamic jump duration based on distance? let's fix it to 700ms for solid rhythm.
+            const duration = 700; 
+
+            function animateJump(time) {
+                let t = (time - startTime) / duration;
+                if (t > 1) t = 1;
+                
+                // Read live positions to perfectly sync with scrolling wrapper
+                const sRect = startIsland.node.getBoundingClientRect();
+                const eRect = endIsland.node.getBoundingClientRect();
+                const wRect = wrapper.getBoundingClientRect();
+
+                // Get Live Wrapper World coordinates
+                const sX = (sRect.left - wRect.left) + wrapper.scrollLeft + sRect.width / 2;
+                const sY = (sRect.top - wRect.top) + wrapper.scrollTop + sRect.height / 2;
+                const eX = (eRect.left - wRect.left) + wrapper.scrollLeft + eRect.width / 2;
+                const eY = (eRect.top - wRect.top) + wrapper.scrollTop + eRect.height / 2;
+
+                // Simple jump arc (Parabola)
+                // Height of jump scaled by horizontal distance to make it feel natural
+                const jumpHeight = Math.max(100, Math.hypot(eX - sX, eY - sY) * 0.25);
+                const arc = Math.sin(t * Math.PI) * jumpHeight;
+                
+                const curX = sX + (eX - sX) * t;
+                const curY = sY + (eY - sY) * t - arc; 
+                const curScale = startIsland.ninjaScale + (endIsland.ninjaScale - startIsland.ninjaScale) * t;
+
+                ninjaEle.style.setProperty('--ninja-x', `${curX - 12}px`);
+                ninjaEle.style.setProperty('--ninja-y', `${curY - 36}px`);
+                ninjaEle.style.setProperty('--ninja-scale', curScale);
+
+                // Face direction loosely
+                const dirX = eX - sX;
+                ninjaEle.style.transform = `translate3d(var(--ninja-x, 0px), var(--ninja-y, 0px), 0px) scaleX(${dirX < 0 ? -1 : 1}) scaleY(1) scale(var(--ninja-scale, 1))`;
+                // Wait, scaleX(-1) and scale(0.5) combining: transform applies left-to-right.
+                // a better way: scale( var(scaleX)*var(ninja-scale) )
+                const flip = dirX < 0 ? -1 : 1;
+                ninjaEle.style.transform = `translate3d(var(--ninja-x), var(--ninja-y), 0) scaleX(${flip * curScale}) scaleY(${curScale})`;
+
+                if (t < 1) {
+                    requestAnimationFrame(animateJump);
+                } else {
+                    isJumping = false;
+                    currentIslandIdx = nextIdx;
+                    ninjaEle.classList.remove('jumping');
+                    ninjaEle.classList.add('idle');
+                    
+                    // Reset transform orientation for idle (he faces last jump dir)
+                    ninjaEle.style.transform = `translate3d(var(--ninja-x), var(--ninja-y), 0) scaleX(${flip * curScale}) scaleY(${curScale})`;
+                }
+            }
+            requestAnimationFrame(animateJump);
+        }
+
+        requestAnimationFrame(engineTick);
+    }
 });

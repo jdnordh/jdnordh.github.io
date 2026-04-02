@@ -39,17 +39,24 @@
 
     <div class="parallax-wrapper">
 
+        <!-- Ninja Character (Direct Child of Wrapper to handle dynamic Z parallax) -->
+        <div id="ninja" class="ninja idle">
+            <div class="ninja-body"></div>
+            <div class="ninja-head">
+                <div class="ninja-headband"></div>
+                <div class="ninja-headband-trail"></div>
+            </div>
+        </div>
+
+
         <!-- Layer 1: Far Background Islands -->
         <div class="parallax-layer parallax-layer-base depth-4 far-islands-container">
-            <div class="island far island-1"></div>
-            <div class="island far island-2"></div>
-            <div class="island far island-3"></div>
-            <div class="island far island-6"></div>
-            <div class="island far island-7"></div>
+            <div class="island type-island-1" data-x="21" data-y="15" data-scale="2.5" data-delay="0s"></div>
+            <div class="island type-island-2" data-x="70" data-y="60" data-delay="-5s"></div>
+            <div class="island type-island-3" data-x="20" data-y="85" data-delay="-10s"></div>
+            <div class="island type-island-3" data-x="80" data-y="140" data-delay="-3s"></div>
+            <div class="island type-island-1" data-x="12" data-y="210" data-delay="-6s"></div>
             <div class="ambient-glow"></div>
-            <!-- 
-            TODO: Move positioning into the div, rather than in the css classes
-            TODO: Add more background islands -->
         </div>
 
         <!-- Layer 2: Far Fog -->
@@ -60,9 +67,9 @@
 
         <!-- Layer 3: Mid Background Islands -->
         <div class="parallax-layer parallax-layer-base depth-2 mid-islands-container">
-            <div class="island mid island-4"></div>
-            <div class="island mid island-5"></div>
-            <div class="island mid island-8"></div>
+            <div class="island type-island-1" data-x="60" data-y="20" data-delay="-2s"></div>
+            <div class="island type-island-2" data-x="5" data-y="70" data-delay="-8s"></div>
+            <div class="island type-island-2" data-x="2" data-y="160" data-delay="-11s"></div>
             <div class="particle-system" id="particles-1"></div>
         </div>
 
