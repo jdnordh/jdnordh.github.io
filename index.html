@@ -51,27 +51,44 @@
 
         <!-- Layer 1: Far Background Islands -->
         <div class="parallax-layer parallax-layer-base depth-4 far-islands-container">
-            <div class="island type-island-1" data-x="21" data-y="15" data-scale="2.5" data-delay="0s"></div>
-            <div class="island type-island-2" data-x="70" data-y="60" data-delay="-5s"></div>
-            <div class="island type-island-3" data-x="20" data-y="85" data-delay="-10s"></div>
-            <div class="island type-island-3" data-x="80" data-y="140" data-delay="-3s"></div>
-            <div class="island type-island-1" data-x="12" data-y="210" data-delay="-6s"></div>
+            <div class="island type-island-1" data-x="10" data-y="8" data-scale="1" data-delay="0s"></div>
+            <div class="island type-island-2" data-x="7" data-y="60" data-scale="1" data-delay="0s"></div>
+            <div class="island type-island-3" data-x="20" data-y="85" data-scale="1" data-delay="0s"></div>
+            <div class="island type-island-1" data-x="21" data-y="15" data-scale="1" data-delay="0s"></div>
+            <div class="island type-island-2" data-x="70" data-y="60" data-scale="1" data-delay="0s"></div>
+            <div class="island type-island-3" data-x="20" data-y="85" data-scale="1" data-delay="0s"></div>
+            <div class="island type-island-1" data-x="21" data-y="15" data-scale="1" data-delay="0s"></div>
+            <div class="island type-island-2" data-x="70" data-y="60" data-scale="1" data-delay="0s"></div>
+            <div class="island type-island-3" data-x="20" data-y="85" data-scale="1" data-delay="0s"></div>
             <div class="ambient-glow"></div>
         </div>
 
         <!-- Layer 2: Far Fog -->
-        <div class="parallax-layer parallax-layer-base depth-3 fog-container far-fog">
-            <div class="fog-texture fog-1"></div>
-            <div class="fog-texture fog-2"></div>
+        <div id="fog-depth-3 depth-3">
+            <div id="foglayer_01" class="fog">
+                <div class="image01"></div>
+                <div class="image02"></div>
+            </div>
+            <div id="foglayer_02" class="fog">
+                <div class="image01"></div>
+                <div class="image02"></div>
+            </div>
+            <div id="foglayer_03" class="fog">
+                <div class="image01"></div>
+                <div class="image02"></div>
+            </div>
         </div>
+<!--        <div class="parallax-layer parallax-layer-base depth-3 fog-container far-fog">-->
+
+<!--        </div>-->
 
         <!-- Layer 3: Mid Background Islands -->
-        <div class="parallax-layer parallax-layer-base depth-2 mid-islands-container">
-            <div class="island type-island-1" data-x="60" data-y="20" data-delay="-2s"></div>
-            <div class="island type-island-2" data-x="5" data-y="70" data-delay="-8s"></div>
-            <div class="island type-island-2" data-x="2" data-y="160" data-delay="-11s"></div>
-            <div class="particle-system" id="particles-1"></div>
-        </div>
+<!--        <div class="parallax-layer parallax-layer-base depth-2 mid-islands-container">-->
+<!--            <div class="island type-island-1" data-x="60" data-y="20" data-delay="-2s"></div>-->
+<!--            <div class="island type-island-2" data-x="5" data-y="70" data-delay="-8s"></div>-->
+<!--            <div class="island type-island-2" data-x="2" data-y="160" data-delay="-11s"></div>-->
+<!--            <div class="particle-system" id="particles-1"></div>-->
+<!--        </div>-->
 
         <!-- Layer 4: Mid Fog 
          TODO: Need to make this stretch down to the bottom of the page
@@ -94,7 +111,7 @@
         </div> -->
 
         <!-- Layer 5: Foreground (Content) -->
-        <div class="parallax-layer parallax-layer-base depth-0 content-layer">
+        <div class="parallax-layer parallax-layer-base content-depth content-layer">
 
             <header class="navbar">
                 <!-- TODO: Remove this logo, and make a icon for the page that looks the same -->

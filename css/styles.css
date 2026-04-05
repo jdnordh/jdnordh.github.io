@@ -118,36 +118,27 @@ a:hover {
 
 /* Depth Layers */
 .depth-4 {
-    transform: translateZ(-3px) scale(2);
     z-index: 1;
-    opacity: 0.85;
 }
 
 .depth-3 {
-    transform: translateZ(-2.25px) scale(1.75);
     z-index: 2;
-    opacity: 0.15;
-    mix-blend-mode: screen;
 }
 
 .depth-2 {
-    transform: translateZ(-1.5px) scale(1.5);
     z-index: 3;
-    opacity: 0.95;
 }
 
 .depth-1 {
-    transform: translateZ(-0.75px) scale(1.25);
     z-index: 4;
-    opacity: 0.2;
-    mix-blend-mode: screen;
 }
 
 .depth-0 {
-    transform: translateZ(0) scale(1);
     z-index: 10;
-    /* We don't stretch this rigidly so content can flow naturally */
-    position: relative;
+}
+
+.content-depth {
+    z-index: 20;
 }
 
 /* --- Themed Elements (Floating Islands & Fog) --- */
