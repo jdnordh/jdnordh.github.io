@@ -25,6 +25,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. (Removed JS 3D hover effect, CSS handles simple vertical lift)
     const wrapper = document.querySelector('.parallax-wrapper');
+    const parallaxLayers = document.querySelectorAll('[data-parallax-speed]');
+    const fogInstances = document.querySelectorAll('.fog-instance');
+
+    function syncParallaxContentHeight() {
+        const fullHeight = Math.max(wrapper.scrollHeight, window.innerHeight);
+        document.documentElement.style.setProperty('--parallax-content-height', `${fullHeight}px`);
+    }
+
+    function applyParallaxTransforms() {
+        const scrollAmount = wrapper.scrollTop;
+        parallaxLayers.forEach((layer) => {
+            const speed = parseFloat(layer.dataset.parallaxSpeed || '0');
+            layer.style.transform = `translate3d(0, ${scrollAmount * speed}px, 0)`;
+        });
+    }
+
+    fogInstances.forEach((fog) => {
+        const speedMultiplier = parseFloat(fog.dataset.fogSpeedMultiplier || '1');
+        fog.style.setProperty('--fog-speed-multiplier', `${speedMultiplier}`);
+    });
+
+    syncParallaxContentHeight();
+    applyParallaxTransforms();
+
+    window.addEventListener('resize', () => {
+        syncParallaxContentHeight();
+        applyParallaxTransforms();
+    });
 
     // 4. Depth-based blur adjustments on scroll (Bonus)
     const farIslands = document.querySelector('.depth-4');
@@ -34,6 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const scrollAmount = wrapper.scrollTop;
         const maxScroll = wrapper.scrollHeight - wrapper.clientHeight;
         const scrollPercent = scrollAmount / maxScroll;
+
+        applyParallaxTransforms();
 
         // Adjust blur based on scroll depth
         if (farIslands) {
@@ -103,11 +133,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const xPct = parseFloat(node.dataset.x || 0);
         const yPct = parseFloat(node.dataset.y || 0);
         const scale = parseFloat(node.dataset.scale || 1);
+        const size = parseFloat(node.dataset.size || 0);
         const delay = node.dataset.delay || '0s';
         
         node.style.left = `${xPct}%`;
         node.style.top = `${yPct}%`;
         if (node.dataset.scale) node.style.setProperty('--island-scale', scale);
+        if (size > 0) {
+            node.style.setProperty('--island-width', `${size}px`);
+            node.style.setProperty('--island-height', `${Math.max(80, Math.round(size * 0.66))}px`);
+        }
         node.style.setProperty('--island-delay', delay);
 
         // Determine Ninja Depth Scale based on layer

@@ -49,66 +49,79 @@
         </div>
 
 
-        <!-- Layer 1: Far Background Islands -->
-        <div class="parallax-layer parallax-layer-base depth-4 far-islands-container">
-            <div class="island type-island-1" data-x="10" data-y="8" data-scale="1" data-delay="0s"></div>
-            <div class="island type-island-2" data-x="7" data-y="60" data-scale="1" data-delay="0s"></div>
-            <div class="island type-island-3" data-x="20" data-y="85" data-scale="1" data-delay="0s"></div>
-            <div class="island type-island-1" data-x="21" data-y="15" data-scale="1" data-delay="0s"></div>
-            <div class="island type-island-2" data-x="70" data-y="60" data-scale="1" data-delay="0s"></div>
-            <div class="island type-island-3" data-x="20" data-y="85" data-scale="1" data-delay="0s"></div>
-            <div class="island type-island-1" data-x="21" data-y="15" data-scale="1" data-delay="0s"></div>
-            <div class="island type-island-2" data-x="70" data-y="60" data-scale="1" data-delay="0s"></div>
-            <div class="island type-island-3" data-x="20" data-y="85" data-scale="1" data-delay="0s"></div>
-            <div class="ambient-glow"></div>
+        <!-- Layer 1: Furthest forward background (behind content) -->
+        <div class="parallax-layer depth-0 island-layer island-layer-large" data-parallax-speed="0.9">
+            <div class="island type-island-1" data-x="6" data-y="6" data-size="430" data-delay="-2s"></div>
+            <div class="island type-island-2" data-x="38" data-y="14" data-size="360" data-delay="-8s"></div>
+            <div class="island type-island-3" data-x="72" data-y="8" data-size="330" data-delay="-4s"></div>
+            <div class="island type-island-1" data-x="16" data-y="42" data-size="420" data-delay="-6s"></div>
+            <div class="island type-island-2" data-x="58" data-y="46" data-size="340" data-delay="-9s"></div>
+            <div class="island type-island-3" data-x="83" data-y="36" data-size="320" data-delay="-1s"></div>
+            <div class="island type-island-1" data-x="10" data-y="92" data-size="390" data-delay="-3s"></div>
+            <div class="island type-island-2" data-x="44" data-y="96" data-size="320" data-delay="-10s"></div>
+            <div class="island type-island-3" data-x="76" data-y="108" data-size="310" data-delay="-5s"></div>
+            <div class="island type-island-1" data-x="28" data-y="142" data-size="450" data-delay="-7s"></div>
         </div>
 
-        <!-- Layer 2: Far Fog -->
-        <div id="fog-depth-3 depth-3">
-            <div id="foglayer_01" class="fog">
-                <div class="image01"></div>
-                <div class="image02"></div>
-            </div>
-            <div id="foglayer_02" class="fog">
-                <div class="image01"></div>
-                <div class="image02"></div>
-            </div>
-            <div id="foglayer_03" class="fog">
-                <div class="image01"></div>
-                <div class="image02"></div>
-            </div>
-        </div>
-<!--        <div class="parallax-layer parallax-layer-base depth-3 fog-container far-fog">-->
-
+        <!-- Layer 2: Fog (1x fog speed) -->
+<!--        <div class="parallax-layer depth-1 fog-instance" data-parallax-speed="0.8" data-fog-speed-multiplier="1">-->
+<!--            <div class="fog-layer fog-layer-01">-->
+<!--                <div class="image01"></div>-->
+<!--                <div class="image02"></div>-->
+<!--            </div>-->
+<!--            <div class="fog-layer fog-layer-02">-->
+<!--                <div class="image01"></div>-->
+<!--                <div class="image02"></div>-->
+<!--            </div>-->
+<!--            <div class="fog-layer fog-layer-03">-->
+<!--                <div class="image01"></div>-->
+<!--                <div class="image02"></div>-->
+<!--            </div>-->
 <!--        </div>-->
 
-        <!-- Layer 3: Mid Background Islands -->
-<!--        <div class="parallax-layer parallax-layer-base depth-2 mid-islands-container">-->
-<!--            <div class="island type-island-1" data-x="60" data-y="20" data-delay="-2s"></div>-->
-<!--            <div class="island type-island-2" data-x="5" data-y="70" data-delay="-8s"></div>-->
-<!--            <div class="island type-island-2" data-x="2" data-y="160" data-delay="-11s"></div>-->
-<!--            <div class="particle-system" id="particles-1"></div>-->
-<!--        </div>-->
+        <!-- Layer 3: Medium islands -->
+        <div class="parallax-layer depth-2 island-layer island-layer-medium" data-parallax-speed="0.7">
+            <div class="island type-island-2" data-x="4" data-y="18" data-size="220" data-delay="-2s"></div>
+            <div class="island type-island-3" data-x="24" data-y="28" data-size="180" data-delay="-5s"></div>
+            <div class="island type-island-1" data-x="62" data-y="24" data-size="270" data-delay="-7s"></div>
+            <div class="island type-island-3" data-x="82" data-y="16" data-size="160" data-delay="-1s"></div>
+            <div class="island type-island-2" data-x="12" data-y="68" data-size="200" data-delay="-8s"></div>
+            <div class="island type-island-1" data-x="40" data-y="76" data-size="260" data-delay="-4s"></div>
+            <div class="island type-island-3" data-x="70" data-y="72" data-size="170" data-delay="-6s"></div>
+            <div class="island type-island-2" data-x="86" data-y="66" data-size="210" data-delay="-3s"></div>
+            <div class="island type-island-1" data-x="30" data-y="126" data-size="280" data-delay="-9s"></div>
+            <div class="island type-island-3" data-x="74" data-y="136" data-size="190" data-delay="-10s"></div>
+        </div>
 
-        <!-- Layer 4: Mid Fog 
-         TODO: Need to make this stretch down to the bottom of the page
-         TODO: Also add another layer of parallax fog that goes between the far and mid islands that moves half the speed -->
-        <!-- <div class="parallax-layer parallax-layer-base depth-1 fog-container mid-fog">
-            <div class="fog-texture fog-3"></div>
-            <div class="fog-texture fog-4"></div>
+        <!-- Layer 4: Fog (0.5x fog speed) -->
+        <div class="parallax-layer depth-3 fog-instance" data-parallax-speed="0.6" data-fog-speed-multiplier="0.5">
+            <div class="fog-layer fog-layer-01">
+                <div class="image01"></div>
+                <div class="image02"></div>
+            </div>
+            <div class="fog-layer fog-layer-02">
+                <div class="image01"></div>
+                <div class="image02"></div>
+            </div>
+            <div class="fog-layer fog-layer-03">
+                <div class="image01"></div>
+                <div class="image02"></div>
+            </div>
         </div>
-        <div id="foglayer_01" class="fog parallax-layer parallax-layer-base depth-1">
-            <div class="image01"></div>
-            <div class="image02"></div>
+
+        <!-- Layer 5: Furthest back islands (small: 80-200px) -->
+        <div class="parallax-layer depth-4 island-layer island-layer-small" data-parallax-speed="0.5">
+            <div class="island type-island-3" data-x="8" data-y="10" data-size="120" data-delay="-3s"></div>
+            <div class="island type-island-1" data-x="26" data-y="20" data-size="180" data-delay="-7s"></div>
+            <div class="island type-island-2" data-x="54" data-y="18" data-size="160" data-delay="-1s"></div>
+            <div class="island type-island-3" data-x="80" data-y="12" data-size="90" data-delay="-5s"></div>
+            <div class="island type-island-1" data-x="14" data-y="56" data-size="170" data-delay="-4s"></div>
+            <div class="island type-island-2" data-x="40" data-y="62" data-size="150" data-delay="-8s"></div>
+            <div class="island type-island-3" data-x="66" data-y="66" data-size="110" data-delay="-9s"></div>
+            <div class="island type-island-1" data-x="88" data-y="58" data-size="190" data-delay="-2s"></div>
+            <div class="island type-island-2" data-x="34" data-y="116" data-size="140" data-delay="-6s"></div>
+            <div class="island type-island-3" data-x="72" data-y="132" data-size="100" data-delay="-10s"></div>
         </div>
-        <div id="foglayer_02" class="fog">
-            <div class="image01"></div>
-            <div class="image02"></div>
-        </div>
-        <div id="foglayer_03" class="fog">
-            <div class="image01"></div>
-            <div class="image02"></div>
-        </div> -->
 
         <!-- Layer 5: Foreground (Content) -->
         <div class="parallax-layer parallax-layer-base content-depth content-layer">
