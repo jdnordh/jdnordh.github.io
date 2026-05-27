@@ -267,6 +267,135 @@
     letter-spacing: 1px;
   }
 
+  /* BOTTOM ROW */
+  .bottom {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 14px;
+    min-height: 0;
+  }
+
+  /* RULES CARD */
+  .rules-card {
+    background: var(--panel);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+  }
+  .rules-card h2 {
+    font-family: var(--font-display, 'Cinzel'), serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin: 0;
+  }
+  .rules-card .scroll-icon { font-size: 2.4rem; line-height: 1; }
+  .rules-card .btn { width: 100%; font-size: 1.1rem; padding: 10px 14px; }
+
+  /* MODAL */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 18, 10, 0.65);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--panel);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    border: 3px solid var(--accent);
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 22px;
+    border-bottom: 2px solid var(--accent-2);
+    background: #fdf4e0;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .modal-head h2 {
+    font-family: var(--font-display, 'Cinzel'), serif;
+    color: var(--accent);
+    margin: 0;
+    font-size: 1.8rem;
+  }
+  .modal-close {
+    background: var(--brick);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+  }
+  .modal-close:hover { background: #c44545; }
+  .modal-body {
+    overflow-y: auto;
+    padding: 20px 28px;
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 1rem;
+  }
+  .modal-body h1 {
+    font-family: var(--font-display, 'Cinzel'), serif;
+    color: var(--accent);
+    font-size: 2rem;
+    margin: 0 0 4px;
+  }
+  .modal-body h2 {
+    font-family: var(--font-display, 'Cinzel'), serif;
+    color: var(--accent);
+    font-size: 1.4rem;
+    margin: 18px 0 6px;
+    border-bottom: 1px solid var(--accent-2);
+    padding-bottom: 4px;
+  }
+  .modal-body h3 {
+    font-family: var(--font-display, 'Cinzel'), serif;
+    color: var(--accent-2);
+    font-size: 1.15rem;
+    margin: 14px 0 4px;
+  }
+  .modal-body p { margin: 6px 0; }
+  .modal-body ul, .modal-body ol { margin: 6px 0; padding-left: 22px; }
+  .modal-body li { margin: 3px 0; }
+  .modal-body em { color: #6b4a2b; }
+  .modal-body strong { color: var(--accent); }
+  .modal-body .subtitle { font-style: italic; color: #6b4a2b; margin-bottom: 12px; }
+  .modal-body table {
+    border-collapse: collapse;
+    margin: 8px 0;
+    background: #fdf4e0;
+  }
+  .modal-body th, .modal-body td {
+    border: 1px solid var(--accent-2);
+    padding: 4px 12px;
+    text-align: left;
+  }
+  .modal-body th {
+    background: var(--accent-2);
+    color: #fff;
+    font-family: var(--font-display, 'Cinzel'), serif;
+  }
+
   /* HISTORY */
   .history-panel {
     background: var(--panel);
@@ -539,16 +668,166 @@
     </div>
   </section>
 
-  <!-- HISTORY -->
-  <section class="history-panel">
-    <div class="head">
-      <h2>Roll History</h2>
-      <div class="hint">Gold-bordered pills = last 6 rolls (current price window)</div>
+  <!-- BOTTOM: HISTORY + RULES CARD -->
+  <section class="bottom">
+    <div class="history-panel">
+      <div class="head">
+        <h2>Roll History</h2>
+        <div class="hint">Gold-bordered pills = last 6 rolls (current price window)</div>
+      </div>
+      <div class="history-strip" id="history">
+        <!-- generated -->
+      </div>
     </div>
-    <div class="history-strip" id="history">
-      <!-- generated -->
+    <div class="rules-card">
+      <button class="btn" id="rules-btn" type="button">📜 Open Rules</button>
     </div>
   </section>
+
+  <!-- RULES MODAL -->
+  <div class="modal-backdrop" id="rules-modal">
+    <div class="modal">
+      <div class="modal-head">
+        <h2>Markets of Catan — Rules</h2>
+        <button class="modal-close" id="rules-close" type="button" title="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <h1>Markets of Catan</h1>
+        <p class="subtitle">A variant of Settlers of Catan introducing money, a fluctuating resource market, and new ways to build, trade, and raid.</p>
+
+        <h2>Setup</h2>
+        <p>Standard 6-player Catan setup, with the following changes:</p>
+        <ul>
+          <li>Each player starts with <strong>2 gold</strong>.</li>
+          <li>All 3:1 ports are replaced with random 2:1 ports.</li>
+          <li>Additional components required:
+            <ul>
+              <li>A bowl of coins (gold)</li>
+              <li>The market prices board with markers (or a digital tracker)</li>
+              <li>Storehouse tokens</li>
+              <li>Market stall tokens</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h2>Money</h2>
+        <p>Money is the universal medium of exchange in Catan's prosperous markets. Rather than hauling lumber through the streets looking for a trade, settlers now carry coin purses.</p>
+        <ul>
+          <li>You may <strong>sell any resource card for 1 gold</strong> at any time, even when it is not your turn.</li>
+          <li>You may <strong>buy resources at the current market price</strong> only on your turn.</li>
+          <li>There is <strong>no limit</strong> to how much gold you can hold.</li>
+          <li>You may <strong>trade</strong> resources, gold, or both with other players. Any trade must involve the active player.</li>
+          <li>You <strong>cannot trade with the bank</strong> under any circumstances, even if you have a port.</li>
+        </ul>
+
+        <h2>Ports</h2>
+        <p>Ports allow you to export the listed resource for a better rate.</p>
+        <ul>
+          <li>A 2:1 port lets you sell the listed resource for <strong>3 gold</strong> instead of 1.</li>
+          <li>Ports do not affect buying; you still buy at market price.</li>
+        </ul>
+
+        <h2>Hand Limit</h2>
+        <p>All resource cards are kept <strong>face up</strong>. Development cards remain face down.</p>
+        <ul>
+          <li>Starting hand limit is <strong>6 resource cards</strong>.</li>
+          <li>If you would exceed your limit at any time (on or off your turn), you must immediately sell or use resources to get back within the limit.</li>
+          <li>Only resource cards count toward the hand limit. Gold and development cards do not.</li>
+        </ul>
+
+        <h3>Storehouses</h3>
+        <p>Storehouses permanently increase your hand limit by 1 card each.</p>
+        <ul>
+          <li>Prices escalate: <strong>4, 8, 12, 16, 20, 24 gold</strong> for your 1st, 2nd, 3rd, etc.</li>
+          <li>Storehouses cannot be lost or stolen.</li>
+          <li>You may purchase storehouses only on your turn.</li>
+        </ul>
+
+        <h3>Market Stalls</h3>
+        <p>A market stall lets you sell any resource for <strong>2 gold</strong> instead of 1.</p>
+        <ul>
+          <li>Cost: <strong>15 gold</strong> (one-time purchase).</li>
+          <li>Stacks with ports: if you have a port for a specific resource, the port rate (3 gold) still applies for that resource; the market stall rate applies to all other resources.</li>
+          <li>You may purchase a market stall only on your turn.</li>
+        </ul>
+
+        <h2>Building with Gold</h2>
+        <p>In addition to the standard resource costs, you may build with gold:</p>
+        <ul>
+          <li><strong>Road:</strong> 4 gold</li>
+          <li><strong>Settlement:</strong> 12 gold</li>
+          <li><strong>City:</strong> 18 gold</li>
+        </ul>
+        <p>You must pay either the full resource cost <strong>or</strong> the full gold cost — you cannot mix the two for a single purchase.</p>
+
+        <h2>The Market</h2>
+        <p>Resource prices fluctuate based on recent production across the island.</p>
+        <ul>
+          <li>After each roll, record the resources produced by that roll. (Example: an 8 is rolled, and there are two hexes showing 8 — one wood, one ore. Record 1 wood and 1 ore.)</li>
+          <li>The market tracks the <strong>last 6 non-7 rolls</strong>. Rolls of 7 are not counted.</li>
+          <li>Prices update <strong>immediately after each roll</strong>.</li>
+        </ul>
+
+        <h3>Price Formula</h3>
+        <p>For each resource, let N be the number of times it has been produced in the last 6 non-7 rolls.</p>
+        <p><strong>Price = 6 − N</strong>, with a minimum of <strong>2 gold</strong>.</p>
+        <table>
+          <thead><tr><th>N</th><th>Price</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>6</td></tr>
+            <tr><td>1</td><td>5</td></tr>
+            <tr><td>2</td><td>4</td></tr>
+            <tr><td>3</td><td>3</td></tr>
+            <tr><td>4+</td><td>2</td></tr>
+          </tbody>
+        </table>
+        <p>A shared digital tracker is recommended to handle tallying and price updates automatically.</p>
+
+        <h2>Rolling a 7: The Hired Thief</h2>
+        <p>Gold attracts thieves, and Catan's roads are not safe.</p>
+        <p>When a 7 is rolled, the roller chooses any player to steal gold from. The amount stolen is <strong>2 × the target's victory points</strong>.</p>
+        <ul>
+          <li>This steal <strong>cannot be blocked</strong>.</li>
+          <li>The roller may not target themselves.</li>
+          <li>The roller may not target the single player with the fewest victory points. If multiple players are tied for fewest, any of them may be targeted.</li>
+          <li>If the target has less gold than the amount owed, they lose all the gold they have. <strong>No difference is paid from the bank.</strong></li>
+        </ul>
+        <p>The traditional robber is not used; the thief deals only in gold and is not placed on the board.</p>
+
+        <h2>Soldier Cards</h2>
+        <p>Soldiers represent strong-arming a favorable deal in the market.</p>
+        <p>When you play a soldier on your turn, for that turn only:</p>
+        <ol>
+          <li><strong>Sell phase:</strong> You may sell any number of resources from your hand at <strong>3 gold each</strong>.</li>
+          <li><strong>Buy phase:</strong> You may then buy any number of resources at <strong>1 gold each</strong> (up to your hand limit).</li>
+        </ol>
+        <p>Sells and buys are resolved as two separate phases — you must complete all selling before any buying.</p>
+        <ul>
+          <li>A played soldier is placed <strong>face-up in front of you</strong> and continues to count toward <strong>Largest Army</strong>.</li>
+          <li>The market discount/premium applies only on the turn the soldier is played.</li>
+          <li>Soldiers may only be played on your turn.</li>
+        </ul>
+
+        <h2>Turn Summary</h2>
+        <p>On your turn:</p>
+        <ol>
+          <li>Roll dice. Distribute resources, or resolve a 7.</li>
+          <li>Update the market tracker with the roll's produced resources (or skip if a 7).</li>
+          <li>Trade, buy, sell, and build as desired. You may:
+            <ul>
+              <li>Buy resources at market price</li>
+              <li>Sell resources for 1 gold each (2 with a market stall, 3 with a port)</li>
+              <li>Trade with other players</li>
+              <li>Build roads, settlements, or cities (with resources or gold)</li>
+              <li>Buy storehouses or market stalls</li>
+              <li>Buy or play development cards</li>
+            </ul>
+          </li>
+          <li>End your turn.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
 
 <script>
 (() => {
@@ -765,6 +1044,19 @@
       e.preventDefault();
       submitRoll();
     }
+  });
+
+  // Rules modal
+  const rulesBtn = document.getElementById('rules-btn');
+  const rulesClose = document.getElementById('rules-close');
+  const rulesModal = document.getElementById('rules-modal');
+  rulesBtn.addEventListener('click', () => rulesModal.classList.add('open'));
+  rulesClose.addEventListener('click', () => rulesModal.classList.remove('open'));
+  rulesModal.addEventListener('click', (e) => {
+    if (e.target === rulesModal) rulesModal.classList.remove('open');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') rulesModal.classList.remove('open');
   });
 
   /* TWEAKS PANEL — commented out, uncomment HTML above + this block to restore font switcher
