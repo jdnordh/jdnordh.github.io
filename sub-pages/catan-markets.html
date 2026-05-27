@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Markets of Catan — Price Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5e9d0;
+    --panel: #fffaf0;
+    --ink: #2c1810;
+    --accent: #8b4513;
+    --accent-2: #c97a3d;
+    --gold: #d4a017;
+    --shadow: 0 4px 12px rgba(60, 30, 10, 0.15);
+    --radius: 14px;
+
+    --wood: #2d5016;
+    --wood-tint: #d8e6c4;
+    --brick: #a83232;
+    --brick-tint: #f1c8c4;
+    --wheat: #d4a017;
+    --wheat-tint: #f7e8b2;
+    --sheep: #6fb84a;
+    --sheep-tint: #dcecc8;
+    --ore: #607d8b;
+    --ore-tint: #cfd8dc;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Roboto Condensed', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 14px 18px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 14px;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    margin: 0;
+    letter-spacing: 1px;
+  }
+
+  /* PRICES STRIP */
+  .prices {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .price-card {
+    background: var(--panel);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 10px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 8px solid var(--ink);
+    transition: transform 0.15s;
+  }
+  .price-card.wood   { border-top-color: var(--wood);  background: linear-gradient(180deg, var(--wood-tint) 0%, var(--panel) 60%); }
+  .price-card.brick  { border-top-color: var(--brick); background: linear-gradient(180deg, var(--brick-tint) 0%, var(--panel) 60%); }
+  .price-card.wheat  { border-top-color: var(--wheat); background: linear-gradient(180deg, var(--wheat-tint) 0%, var(--panel) 60%); }
+  .price-card.sheep  { border-top-color: var(--sheep); background: linear-gradient(180deg, var(--sheep-tint) 0%, var(--panel) 60%); }
+  .price-card.ore    { border-top-color: var(--ore);   background: linear-gradient(180deg, var(--ore-tint) 0%, var(--panel) 60%); }
+
+  .price-card .icon { font-size: clamp(2.5rem, 4vw, 3.6rem); line-height: 1; }
+  .price-card .name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.1rem, 1.6vw, 1.8rem);
+    letter-spacing: 2px;
+    color: var(--ink);
+  }
+  .price-card .price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 7.5vw, 6.5rem);
+    line-height: 1;
+    color: var(--accent);
+    margin-top: 4px;
+  }
+  .price-card .price::after {
+    content: " g";
+    font-size: 0.45em;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  /* MIDDLE ROW */
+  .middle {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 14px;
+  }
+
+  .panel {
+    background: var(--panel);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .panel h2 {
+    font-size: 1.6rem;
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent-2);
+    padding-bottom: 6px;
+  }
+
+  /* ROLL ENTRY */
+  .inputs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+  .input-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px;
+    border-radius: 10px;
+    background: #fdf4e0;
+    border: 2px solid transparent;
+  }
+  .input-cell.wood   { border-color: var(--wood);  }
+  .input-cell.brick  { border-color: var(--brick); }
+  .input-cell.wheat  { border-color: var(--wheat); }
+  .input-cell.sheep  { border-color: var(--sheep); }
+  .input-cell.ore    { border-color: var(--ore);   }
+
+  .input-cell .icon { font-size: 1.8rem; line-height: 1; }
+  .input-cell label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+  .input-cell input[type=number] {
+    width: 100%;
+    font-size: 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    text-align: center;
+    border: 2px solid #d9c9a4;
+    border-radius: 8px;
+    padding: 4px 0;
+    background: #fff;
+    color: var(--ink);
+  }
+  .input-cell input[type=number]:disabled {
+    background: #eee;
+    color: #aaa;
+    border-color: #ccc;
+  }
+
+  .roll-actions {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 1.5px;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 22px;
+    cursor: pointer;
+    background: var(--accent);
+    color: #fff;
+    box-shadow: var(--shadow);
+    transition: transform 0.08s, background 0.15s;
+  }
+  .btn:hover:not(:disabled) { background: var(--accent-2); }
+  .btn:active:not(:disabled) { transform: translateY(2px); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn.primary { background: var(--wood); flex: 2; }
+  .btn.primary:hover:not(:disabled) { background: #3d6b22; }
+  .btn.seven {
+    background: #fff;
+    color: var(--brick);
+    border: 3px solid var(--brick);
+    flex: 1;
+  }
+  .btn.seven.active {
+    background: var(--brick);
+    color: #fff;
+  }
+  .btn.danger { background: var(--brick); }
+  .btn.danger:hover:not(:disabled) { background: #c44545; }
+  .btn.ghost { background: #8a7050; }
+
+  .controls-row {
+    display: flex;
+    gap: 10px;
+  }
+  .controls-row .btn { flex: 1; }
+
+  /* BUILDING COSTS */
+  .costs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .cost-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fdf4e0;
+    border-radius: 8px;
+    padding: 8px 14px;
+    border-left: 6px solid var(--accent-2);
+  }
+  .cost-row .label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+  .cost-row .label .icon { font-size: 1.6rem; }
+  .cost-row .cost {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--accent);
+  }
+  .cost-row .cost::after {
+    content: " g";
+    color: var(--gold);
+    font-size: 0.8em;
+  }
+  .cost-row.storehouse .cost {
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+  }
+  .cost-row.storehouse .cost::after { content: ""; }
+
+  /* HISTORY */
+  .history-panel {
+    background: var(--panel);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 12px 16px;
+  }
+  .history-panel .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .history-panel h2 {
+    font-size: 1.4rem;
+    color: var(--accent);
+  }
+  .history-panel .hint {
+    font-size: 0.85rem;
+    color: #8a7050;
+  }
+  .history-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+  .history-strip::-webkit-scrollbar { height: 8px; }
+  .history-strip::-webkit-scrollbar-thumb { background: var(--accent-2); border-radius: 4px; }
+
+  .history-pill {
+    flex: 0 0 auto;
+    min-width: 130px;
+    background: #fdf4e0;
+    border: 2px solid #d9c9a4;
+    border-radius: 10px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .history-pill.window {
+    background: #fff4cc;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(212, 160, 23, 0.25);
+  }
+  .history-pill.seven {
+    background: #fde3e3;
+    border-color: var(--brick);
+  }
+  .history-pill .roll-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+  .history-pill .roll-content {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .history-empty {
+    color: #8a7050;
+    font-style: italic;
+    padding: 10px;
+  }
+
+  /* RESPONSIVE FALLBACK */
+  @media (max-width: 900px) {
+    body { padding: 10px; }
+    .prices { grid-template-columns: repeat(2, 1fr); }
+    .middle { grid-template-columns: 1fr; }
+    .inputs { grid-template-columns: repeat(5, 1fr); }
+    .price-card .price { font-size: 3.2rem; }
+  }
+  @media (max-width: 520px) {
+    .inputs { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+  <!-- CURRENT PRICES -->
+  <section class="prices" id="prices">
+    <!-- generated -->
+  </section>
+
+  <!-- MIDDLE ROW -->
+  <section class="middle">
+    <div class="panel" id="entry-panel">
+      <h2>Roll Entry</h2>
+      <div class="inputs" id="inputs">
+        <!-- generated -->
+      </div>
+      <div class="roll-actions">
+        <button class="btn seven" id="seven-btn" type="button">7 rolled (no resources)</button>
+        <button class="btn primary" id="submit-btn" type="button">Submit Roll</button>
+      </div>
+      <div class="controls-row">
+        <button class="btn ghost" id="undo-btn" type="button" disabled>↶ Undo Last</button>
+        <button class="btn danger" id="reset-btn" type="button">Reset Game</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Building Costs</h2>
+      <div class="costs-list">
+        <div class="cost-row"><div class="label"><span class="icon">🛣️</span>Road</div><div class="cost">4</div></div>
+        <div class="cost-row"><div class="label"><span class="icon">🏠</span>Settlement</div><div class="cost">12</div></div>
+        <div class="cost-row"><div class="label"><span class="icon">🏰</span>City</div><div class="cost">18</div></div>
+        <div class="cost-row storehouse"><div class="label"><span class="icon">🏪</span>Storehouse</div><div class="cost">4 / 8 / 12 / 16 / 20 / 24 g</div></div>
+        <div class="cost-row"><div class="label"><span class="icon">🎪</span>Market Stall</div><div class="cost">15</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORY -->
+  <section class="history-panel">
+    <div class="head">
+      <h2>Roll History</h2>
+      <div class="hint">Gold-bordered pills = last 6 rolls (current price window)</div>
+    </div>
+    <div class="history-strip" id="history">
+      <!-- generated -->
+    </div>
+  </section>
+
+<script>
+(() => {
+  const STORAGE_KEY = 'catan-market-rolls';
+  const RESOURCES = [
+    { key: 'wood',  label: 'Wood',  icon: '🌲' },
+    { key: 'brick', label: 'Brick', icon: '🧱' },
+    { key: 'wheat', label: 'Wheat', icon: '🌾' },
+    { key: 'sheep', label: 'Sheep', icon: '🐑' },
+    { key: 'ore',   label: 'Ore',   icon: '⛰️' },
+  ];
+  const WINDOW_SIZE = 6;
+
+  // DOM
+  const pricesEl = document.getElementById('prices');
+  const inputsEl = document.getElementById('inputs');
+  const historyEl = document.getElementById('history');
+  const submitBtn = document.getElementById('submit-btn');
+  const sevenBtn = document.getElementById('seven-btn');
+  const undoBtn = document.getElementById('undo-btn');
+  const resetBtn = document.getElementById('reset-btn');
+
+  let rolls = loadRolls();
+  let sevenMode = false;
+
+  // Build static price cards
+  RESOURCES.forEach(r => {
+    const card = document.createElement('div');
+    card.className = `price-card ${r.key}`;
+    card.innerHTML = `
+      <div class="icon">${r.icon}</div>
+      <div class="name">${r.label}</div>
+      <div class="price" id="price-${r.key}">6</div>
+    `;
+    pricesEl.appendChild(card);
+  });
+
+  // Build input cells
+  RESOURCES.forEach(r => {
+    const cell = document.createElement('div');
+    cell.className = `input-cell ${r.key}`;
+    cell.innerHTML = `
+      <div class="icon">${r.icon}</div>
+      <label for="in-${r.key}">${r.label}</label>
+      <input type="number" id="in-${r.key}" min="0" step="1" value="0">
+    `;
+    inputsEl.appendChild(cell);
+  });
+
+  // Persistence
+  function loadRolls() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  function saveRolls() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(rolls));
+  }
+
+  // Price calc
+  function calcPrices() {
+    const window = rolls.slice(-WINDOW_SIZE);
+    const out = {};
+    RESOURCES.forEach(r => {
+      const n = window.reduce((acc, roll) => acc + (roll.isSeven ? 0 : (roll[r.key] || 0)), 0);
+      out[r.key] = Math.max(2, 6 - n);
+    });
+    return out;
+  }
+
+  // Render
+  function render() {
+    const prices = calcPrices();
+    RESOURCES.forEach(r => {
+      document.getElementById(`price-${r.key}`).textContent = prices[r.key];
+    });
+
+    undoBtn.disabled = rolls.length === 0;
+
+    historyEl.innerHTML = '';
+    if (rolls.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'history-empty';
+      empty.textContent = 'No rolls yet. Submit your first roll to begin.';
+      historyEl.appendChild(empty);
+      return;
+    }
+    const reversed = [...rolls].reverse();
+    reversed.forEach((roll, idx) => {
+      const pill = document.createElement('div');
+      const inWindow = idx < WINDOW_SIZE;
+      pill.className = 'history-pill' + (inWindow ? ' window' : '') + (roll.isSeven ? ' seven' : '');
+      let content;
+      if (roll.isSeven) {
+        content = '🎲 7 rolled';
+      } else {
+        const parts = RESOURCES
+          .filter(r => (roll[r.key] || 0) > 0)
+          .map(r => `${roll[r.key]}${r.icon}`);
+        content = parts.length ? parts.join(' ') : '— none —';
+      }
+      pill.innerHTML = `
+        <div class="roll-num">Roll ${roll.id}</div>
+        <div class="roll-content">${content}</div>
+      `;
+      historyEl.appendChild(pill);
+    });
+  }
+
+  // Form helpers
+  function readInputs() {
+    const data = { isSeven: false };
+    RESOURCES.forEach(r => {
+      const v = parseInt(document.getElementById(`in-${r.key}`).value, 10);
+      data[r.key] = Number.isFinite(v) && v > 0 ? v : 0;
+    });
+    return data;
+  }
+  function clearInputs() {
+    RESOURCES.forEach(r => {
+      document.getElementById(`in-${r.key}`).value = 0;
+    });
+  }
+  function setSevenMode(on) {
+    sevenMode = on;
+    sevenBtn.classList.toggle('active', on);
+    RESOURCES.forEach(r => {
+      document.getElementById(`in-${r.key}`).disabled = on;
+    });
+  }
+  function nextId() {
+    return (rolls.length ? rolls[rolls.length - 1].id : 0) + 1;
+  }
+
+  // Actions
+  function submitRoll() {
+    let roll;
+    if (sevenMode) {
+      roll = { id: nextId(), wood: 0, brick: 0, wheat: 0, sheep: 0, ore: 0, isSeven: true };
+    } else {
+      const data = readInputs();
+      roll = { id: nextId(), ...data };
+    }
+    rolls.push(roll);
+    saveRolls();
+    clearInputs();
+    setSevenMode(false);
+    render();
+  }
+  function undoRoll() {
+    if (!rolls.length) return;
+    rolls.pop();
+    saveRolls();
+    render();
+  }
+  function resetGame() {
+    if (!rolls.length) return;
+    if (!confirm('Clear all roll history? This cannot be undone.')) return;
+    rolls = [];
+    saveRolls();
+    render();
+  }
+
+  // Wire up
+  submitBtn.addEventListener('click', submitRoll);
+  sevenBtn.addEventListener('click', () => setSevenMode(!sevenMode));
+  undoBtn.addEventListener('click', undoRoll);
+  resetBtn.addEventListener('click', resetGame);
+
+  // Submit on Enter from any input
+  inputsEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      submitRoll();
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
