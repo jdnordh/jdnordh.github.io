@@ -283,20 +283,26 @@
   .history-pill {
     flex: 0 0 auto;
     min-width: 130px;
-    background: #fdf4e0;
-    border: 2px solid #d9c9a4;
+    background: #e0e0e0;
+    border: 2px solid #b0b0b0;
     border-radius: 10px;
     padding: 8px 10px;
     display: flex;
     flex-direction: column;
     gap: 4px;
+    color: #777;
+    filter: grayscale(1);
+    opacity: 0.75;
   }
   .history-pill.window {
     background: #fff4cc;
     border-color: var(--gold);
     box-shadow: 0 0 0 2px rgba(212, 160, 23, 0.25);
+    color: var(--ink);
+    filter: none;
+    opacity: 1;
   }
-  .history-pill.seven {
+  .history-pill.window.seven {
     background: #fde3e3;
     border-color: var(--brick);
   }
