@@ -41,7 +41,7 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 14px;
     max-width: 100vw;
-    overflow-x: hidden;
+    overflow: hidden;
   }
   body > * { min-width: 0; }
 
@@ -71,6 +71,7 @@
     transition: transform 0.15s;
     height: 100%;
     min-height: 0;
+    padding: clamp(4px, 1vh, 10px) 16px clamp(6px, 1.5vh, 14px);
   }
   .price-card.wood   { border-top-color: var(--wood);  background: linear-gradient(180deg, var(--wood-tint) 0%, var(--panel) 60%); }
   .price-card.brick  { border-top-color: var(--brick); background: linear-gradient(180deg, var(--brick-tint) 0%, var(--panel) 60%); }
@@ -78,17 +79,17 @@
   .price-card.sheep  { border-top-color: var(--sheep); background: linear-gradient(180deg, var(--sheep-tint) 0%, var(--panel) 60%); }
   .price-card.ore    { border-top-color: var(--ore);   background: linear-gradient(180deg, var(--ore-tint) 0%, var(--panel) 60%); }
 
-  .price-card .icon { font-size: clamp(4rem, 7vw, 6.5rem); line-height: 1; }
+  .price-card .icon { font-size: clamp(1.5rem, 5vh, 5.5rem); line-height: 1; }
   .price-card .name {
     font-family: var(--font-display, 'Cinzel'), serif;
-    font-size: clamp(1.8rem, 2.8vw, 3rem);
+    font-size: clamp(0.9rem, 2vh, 2.5rem);
     letter-spacing: 2px;
     color: var(--ink);
     margin-top: 2px;
   }
   .price-card .price {
     font-family: var(--font-display, 'Cinzel'), serif;
-    font-size: clamp(6rem, 13vw, 11.5rem);
+    font-size: clamp(2.5rem, 10vh, 10rem);
     line-height: 0.95;
     color: var(--accent);
     margin-top: 0px;
@@ -121,13 +122,13 @@
     background: var(--panel);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    padding: 16px 20px;
+    padding: clamp(8px, 1.5vh, 16px) 20px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: clamp(6px, 1vh, 12px);
   }
   .panel h2 {
-    font-size: 1.6rem;
+    font-size: clamp(1rem, 1.8vh, 1.6rem);
     color: var(--accent);
     border-bottom: 2px solid var(--accent-2);
     padding-bottom: 6px;
@@ -144,13 +145,13 @@
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    padding: 12px 6px;
     border-radius: 10px;
     background: #fdf4e0;
     border: 2px solid transparent;
     cursor: pointer;
     user-select: none;
     transition: transform 0.08s, box-shadow 0.12s;
+    padding: clamp(4px, 1vh, 12px) 6px;
   }
   .input-cell:hover { box-shadow: var(--shadow); }
   .input-cell:active { transform: translateY(2px); }
@@ -161,15 +162,15 @@
   .input-cell.sheep  { border-color: var(--sheep); }
   .input-cell.ore    { border-color: var(--ore);   }
 
-  .input-cell .icon { font-size: 1.8rem; line-height: 1; }
+  .input-cell .icon { font-size: clamp(1rem, 2.5vh, 1.8rem); line-height: 1; }
   .input-cell label {
     font-family: var(--font-display, 'Cinzel'), serif;
-    font-size: 1rem;
+    font-size: clamp(0.6rem, 1.1vh, 1rem);
     letter-spacing: 1px;
   }
   .input-cell input[type=number] {
     width: 100%;
-    font-size: 2rem;
+    font-size: clamp(1rem, 2vh, 2rem);
     font-family: var(--font-display, 'Cinzel'), serif;
     text-align: center;
     border: 2px solid #d9c9a4;
@@ -192,11 +193,11 @@
   }
   .btn {
     font-family: var(--font-display, 'Cinzel'), serif;
-    font-size: 1.4rem;
+    font-size: clamp(0.75rem, 1.4vh, 1.4rem);
     letter-spacing: 1.5px;
     border: none;
     border-radius: 10px;
-    padding: 14px 22px;
+    padding: clamp(6px, 1.1vh, 14px) clamp(10px, 1.5vw, 22px);
     cursor: pointer;
     background: var(--accent);
     color: #fff;
@@ -230,17 +231,18 @@
 
   /* BUILDING COSTS */
   .costs-list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
   }
+  .cost-row.storehouse { grid-column: span 2; }
   .cost-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: #fdf4e0;
     border-radius: 8px;
-    padding: 8px 14px;
+    padding: clamp(4px, 0.8vh, 8px) clamp(8px, 1vw, 14px);
     border-left: 6px solid var(--accent-2);
   }
   .cost-row .label {
@@ -248,13 +250,13 @@
     align-items: center;
     gap: 10px;
     font-family: var(--font-display, 'Cinzel'), serif;
-    font-size: 1.3rem;
+    font-size: clamp(0.8rem, 1.3vh, 1.3rem);
     letter-spacing: 1px;
   }
   .cost-row .label .icon { font-size: 1.6rem; }
   .cost-row .cost {
     font-family: var(--font-display, 'Cinzel'), serif;
-    font-size: 1.6rem;
+    font-size: clamp(0.9rem, 1.5vh, 1.6rem);
     color: var(--accent);
   }
   .cost-row .cost::after {
@@ -263,7 +265,7 @@
     font-size: 0.8em;
   }
   .cost-row.storehouse .cost {
-    font-size: 1.3rem;
+    font-size: clamp(0.75rem, 1.1vh, 1.3rem);
     letter-spacing: 1px;
   }
 
@@ -645,7 +647,6 @@
     .prices { grid-template-columns: repeat(2, 1fr); }
     .middle { grid-template-columns: 1fr; }
     .inputs { grid-template-columns: repeat(5, 1fr); }
-    .price-card .price { font-size: 3.2rem; }
   }
   @media (max-width: 520px) {
     .inputs { grid-template-columns: repeat(2, 1fr); }
@@ -706,8 +707,8 @@
         <div class="cost-row"><div class="label"><span class="icon">🛣️</span>Road</div><div class="cost">4</div></div>
         <div class="cost-row"><div class="label"><span class="icon">🏠</span>Settlement</div><div class="cost">12</div></div>
         <div class="cost-row"><div class="label"><span class="icon">🏰</span>City</div><div class="cost">18</div></div>
-        <div class="cost-row storehouse"><div class="label"><span class="icon">🏪</span>Storehouse</div><div class="cost">4 / 8 / 12 / 16 / 20 / 24</div></div>
         <div class="cost-row"><div class="label"><span class="icon">🎪</span>Market Stall</div><div class="cost">15</div></div>
+        <div class="cost-row storehouse"><div class="label"><span class="icon">🏪</span>Storehouse</div><div class="cost">4 / 8 / 12 / 16 / 20 / 24</div></div>
       </div>
     </div>
   </section>
