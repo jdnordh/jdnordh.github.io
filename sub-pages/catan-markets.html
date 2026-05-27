@@ -96,7 +96,7 @@
   .price-card .price::after {
     content: "GOLD";
     display: block;
-    font-size: 0.22em;
+    font-size: 0.14em;
     color: var(--gold);
     letter-spacing: 3px;
     text-align: center;
@@ -330,8 +330,9 @@
     letter-spacing: 1px;
   }
   .history-pill .roll-content {
-    font-size: 1rem;
+    font-size: 1.4rem;
     font-weight: 700;
+    line-height: 1.1;
   }
   .history-empty {
     color: #8a7050;
@@ -554,6 +555,7 @@
     { key: 'ore',   label: 'Ore',   icon: '⛰️' },
   ];
   const WINDOW_SIZE = 6;
+  const MAX_PER_ROLL = 4;
 
   // DOM
   const pricesEl = document.getElementById('prices');
@@ -599,6 +601,7 @@
       if (e.target === input) return; // typing in input, leave alone
       const delta = e.shiftKey ? -1 : 1;
       const cur = parseInt(input.value, 10) || 0;
+      if (delta > 0 && totalInputs() >= MAX_PER_ROLL) return;
       input.value = Math.max(0, cur + delta);
     });
     cell.addEventListener('contextmenu', (e) => {
@@ -608,6 +611,14 @@
       input.value = Math.max(0, cur - 1);
     });
     input.addEventListener('click', (e) => e.stopPropagation());
+    input.addEventListener('input', () => {
+      // clamp on direct typing
+      let v = parseInt(input.value, 10) || 0;
+      if (v < 0) v = 0;
+      const others = totalInputs() - v;
+      if (others + v > MAX_PER_ROLL) v = Math.max(0, MAX_PER_ROLL - others);
+      input.value = v;
+    });
   });
 
   // Persistence
@@ -660,11 +671,11 @@
       pill.className = 'history-pill' + (inWindow ? ' window' : '') + (roll.isSeven ? ' seven' : '');
       let content;
       if (roll.isSeven) {
-        content = '🎲 7 rolled';
+        content = '🎲 7';
       } else {
         const parts = RESOURCES
           .filter(r => (roll[r.key] || 0) > 0)
-          .map(r => `${roll[r.key]}${r.icon}`);
+          .map(r => r.icon.repeat(roll[r.key]));
         content = parts.length ? parts.join(' ') : '— none —';
       }
       pill.innerHTML = `
@@ -676,6 +687,12 @@
   }
 
   // Form helpers
+  function totalInputs() {
+    return RESOURCES.reduce((acc, r) => {
+      const v = parseInt(document.getElementById(`in-${r.key}`).value, 10);
+      return acc + (Number.isFinite(v) && v > 0 ? v : 0);
+    }, 0);
+  }
   function readInputs() {
     const data = { isSeven: false };
     RESOURCES.forEach(r => {
