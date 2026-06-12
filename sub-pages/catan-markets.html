@@ -655,14 +655,6 @@
 </style>
 </head>
 
-<!--
-UPDATES:
-- Ports: still sell for 3, but have 1 token with a settlement, and 2 with a city
-- Reduce market stall cost to 10 (from 12) to make it more appealing
-- Roll 7: tax collector, collect 2 gold from each other player
-- Remove storehouses completely
-
--->
 <body class="font-cinzel">
 
   <!-- TWEAKS PANEL (commented out — uncomment to re-enable font switcher)
@@ -767,6 +759,12 @@ UPDATES:
               <li>Market stall tokens</li>
             </ul>
           </li>
+          <li>Components <strong>not</strong> required:
+            <ul>
+              <li>The robber meeple</li>
+              <li>Monopoly development cards</li>
+            </ul>
+          </li>
         </ul>
 
         <h2>Money</h2>
@@ -794,19 +792,11 @@ UPDATES:
           <li>Only resource cards count toward the hand limit. Gold and development cards do not.</li>
         </ul>
 
-        <h3>Storehouses</h3>
-        <p>Storehouses permanently increase your hand limit by 1 card each.</p>
-        <ul>
-          <li>Prices escalate: <strong>4, 8, 12, 16, 20, 24 gold</strong> for your 1st, 2nd, 3rd, etc.</li>
-          <li>Storehouses cannot be lost or stolen.</li>
-          <li>You may purchase storehouses only on your turn.</li>
-        </ul>
-
         <h3>Market Stalls</h3>
         <p>A market stall lets you sell any resource for <strong>2 gold</strong> instead of 1.</p>
         <ul>
-          <li>Cost: <strong>15 gold</strong> (one-time purchase).</li>
-          <li>Stacks with ports: if you have a port for a specific resource, the port rate (3 gold) still applies for that resource; the market stall rate applies to all other resources.</li>
+          <li>Cost: <strong>10 gold</strong> (one-time purchase).</li>
+          <li>If you have a port for a specific resource, the port rate (3 gold) still applies until you have no export tokens, and then market stall rate applies</li>
           <li>You may purchase a market stall only on your turn.</li>
         </ul>
 
@@ -842,29 +832,19 @@ UPDATES:
         </table>
         <p>A shared digital tracker is recommended to handle tallying and price updates automatically.</p>
 
-        <h2>Rolling a 7: The Hired Thief</h2>
-        <p>Gold attracts thieves, and Catan's roads are not safe.</p>
-        <p>When a 7 is rolled, the roller chooses any player to steal gold from. The amount stolen is <strong>2 × the target's victory points</strong>.</p>
-        <ul>
-          <li>This steal <strong>cannot be blocked</strong>.</li>
-          <li>The roller may not target themselves.</li>
-          <li>The roller may not target the single player with the fewest victory points. If multiple players are tied for fewest, any of them may be targeted.</li>
-          <li>If the target has less gold than the amount owed, they lose all the gold they have. <strong>No difference is paid from the bank.</strong></li>
-        </ul>
+        <h2>Rolling a 7: Tax Collector</h2>
+        <p>You act on behalf of the powers that be in the land of Catan to collect tribute.</p>
+        <p>When a 7 is rolled, the roller collects 2 gold in taxes from <strong>every player</strong>. If a player only has 1 gold, that gold is taken as tax.</p>
         <p>The traditional robber is not used; the thief deals only in gold and is not placed on the board.</p>
 
         <h2>Soldier Cards</h2>
         <p>Soldiers represent strong-arming a favorable deal in the market.</p>
-        <p>When you play a soldier on your turn, for that turn only:</p>
-        <ol>
-          <li><strong>Sell phase:</strong> You may sell any number of resources from your hand at <strong>3 gold each</strong>.</li>
-          <li><strong>Buy phase:</strong> You may then buy any number of resources at <strong>1 gold each</strong> (up to your hand limit).</li>
-        </ol>
-        <p>Sells and buys are resolved as two separate phases — you must complete all selling before any buying.</p>
+        <p>When you play a soldier on your turn, you enter a selling phase. You can sell any amount of cards from you hand, but you may take no actions to gain cards (such as buying or trading) until ending the selling phase.</p>
         <ul>
           <li>A played soldier is placed <strong>face-up in front of you</strong> and continues to count toward <strong>Largest Army</strong>.</li>
-          <li>The market discount/premium applies only on the turn the soldier is played.</li>
+          <li>The market premium applies only on the turn the soldier is played.</li>
           <li>Soldiers may only be played on your turn.</li>
+          <li>You may play multiple soldiers per turn to create multiple sell phases.</li>
         </ul>
 
         <h2>Turn Summary</h2>
@@ -878,8 +858,8 @@ UPDATES:
               <li>Sell resources for 1 gold each (2 with a market stall, 3 with a port)</li>
               <li>Trade with other players</li>
               <li>Build roads, settlements, or cities (with resources or gold)</li>
-              <li>Buy storehouses or market stalls</li>
-              <li>Buy or play development cards</li>
+              <li>Buy a market stall</li>
+              <li>Buy or play development cards. Development cards cannot be played on the same turn they were bought.</li>
             </ul>
           </li>
           <li>End your turn.</li>
